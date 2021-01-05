@@ -1,0 +1,23 @@
+body{
+    font-family: sans-serif;
+}
+.card{
+    padding: 3rem;
+    border: 1px solid white;
+    border-radius: 20px;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
+}
+
+.current-weather{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weather{
+    width: 300px;
+}
+.weather__temperature{
+    color: #666;
+    font-size: 3rem;
+}

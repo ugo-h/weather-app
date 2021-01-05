@@ -3,8 +3,14 @@ import { weatherApiKey } from '../config';
 
 function weatherDataFacade({ current }) {
     return {
-        temp_c: current.temp_c,
-        temp_f: current.temp_f,
+        temp: {
+            c: current.temp_c,
+            f: current.temp_f
+        },
+        feelslike: {
+            c: current.feelslike_c,
+            f: current.feelslike_f
+        },
         icon: current.condition.icon,
         summary: current.condition.text,
         humidity: current.humidity,
