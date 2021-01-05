@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true,
+        "node": true
+    },
+    "extends": "airbnb-base/legacy",
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "windows"],
+        "no-underscore-dangle": "off"
+    }
+}
