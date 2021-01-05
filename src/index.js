@@ -1,4 +1,4 @@
-import GelocationIpinfo from './Geolocation/Geolocation';
+import GeolocationAPI from './Geolocation/Geolocation';
 import ControlBlock from './ControlBlock/Controlblock';
 import CurrentWeather from './CurrentWeather/CurrentWeather';
 import WeatherUI from './UI/WeatherUI';
@@ -30,7 +30,7 @@ class WeatherApp {
             nextWeather: new Array(3).fill(null)
         };
         this.controlBlock = new ControlBlock('control', { language: this.state.language, location: this.state.location });
-        this.geolocation = new GelocationIpinfo();
+        this.geolocation = new GeolocationAPI();
         this.ui = new WeatherUI('container');
         this.ui.render();
         this.currentWeather = new CurrentWeather('current-weather');
@@ -38,37 +38,34 @@ class WeatherApp {
 
     changeUnits() {
         this.state.units = this.state.units === 'c' ? 'f' : 'c';
-        this.controlBlock.update({
-            language: this.state.language,
-            units: this.state.units,
-            ...this.state.geolocation
-        });
-        this.currentWeather.update({
-            language: this.state.language,
-            units: this.state.units,
-            ...this.state.geolocation
-        });
+        this.controlBlock.update({ ...this.state });
+        this.currentWeather.update({ ...this.state });
+        this.saveState();
+    }
+
+    saveState() {
+        localStorage.setItem('preferences', JSON.stringify(this.state));
+    }
+
+    async loadState() {
+        let data = localStorage.getItem('preferences');
+        if (!data) {
+            data = await this.geolocation.getLocation();
+            const geolocation = geolocationFacade(data);
+            const language = getLanguage(data);
+            const units = getUnits(data);
+            this.state = { ...geolocation, language, units };
+            localStorage.setItem('preferences', JSON.stringify(this.state));
+        } else {
+            this.state = JSON.parse(data);
+        }
     }
 
     async init() {
-        const data = await this.geolocation.getLocation();
-
-        this.state.geolocation = geolocationFacade(data);
-        this.state.language = getLanguage(data);
-        this.state.units = getUnits(data);
-
+        this.loadState();
         this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
-        this.controlBlock.update({
-            language: this.state.language,
-            units: this.state.units,
-            ...this.state.geolocation
-        });
-
-        this.currentWeather.update({
-            language: this.state.language,
-            units: this.state.units,
-            ...this.state.geolocation
-        });
+        this.controlBlock.update({ ...this.state });
+        this.currentWeather.update({ ...this.state });
     }
 }
 
