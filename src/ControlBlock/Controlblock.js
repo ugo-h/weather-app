@@ -7,7 +7,11 @@ export default class ControlBlock {
         this.ui.render(this.state);
     }
 
-    updateState(newState) {
+    onChangeUnits(callback) {
+        this.ui.setUnitBtnHandler(callback);
+    }
+
+    update(newState) {
         this.state = newState;
         this.ui.render(this.state);
     }

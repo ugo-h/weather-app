@@ -36,12 +36,34 @@ class WeatherApp {
         this.currentWeather = new CurrentWeather('current-weather');
     }
 
+    changeUnits() {
+        this.state.units = this.state.units === 'c' ? 'f' : 'c';
+        this.controlBlock.update({
+            language: this.state.language,
+            units: this.state.units,
+            ...this.state.geolocation
+        });
+        this.currentWeather.update({
+            language: this.state.language,
+            units: this.state.units,
+            ...this.state.geolocation
+        });
+    }
+
     async init() {
         const data = await this.geolocation.getLocation();
+
         this.state.geolocation = geolocationFacade(data);
         this.state.language = getLanguage(data);
         this.state.units = getUnits(data);
-        this.controlBlock.updateState(this.state.geolocation);
+
+        this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
+        this.controlBlock.update({
+            language: this.state.language,
+            units: this.state.units,
+            ...this.state.geolocation
+        });
+
         this.currentWeather.update({
             language: this.state.language,
             units: this.state.units,
