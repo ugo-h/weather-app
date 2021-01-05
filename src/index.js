@@ -1,6 +1,7 @@
 import GeolocationAPI from './API/Geolocation/Geolocation';
 import ControlBlock from './Components/ControlBlock/Controlblock';
 import CurrentWeather from './Components/CurrentWeather/CurrentWeather';
+import FutureWeather from './Components/FutureWeather/FutureWeather';
 import WeatherUI from './UI/WeatherUI';
 
 function getLanguage(data) {
@@ -32,15 +33,17 @@ function getFormattedData(data) {
 class WeatherApp {
     constructor() {
         this.state = {
-            geolocation: null,
-            weather: null,
-            nextWeather: new Array(3).fill(null)
+            units: null,
+            location: null,
+            lat: null,
+            language: null
         };
         this.controlBlock = new ControlBlock('control', { language: this.state.language, location: this.state.location });
         this.geolocation = new GeolocationAPI();
         this.ui = new WeatherUI('container');
         this.ui.render();
         this.currentWeather = new CurrentWeather('current-weather');
+        this.futureWeather = new FutureWeather('forecast-weather');
     }
 
     changeUnits() {
@@ -70,6 +73,7 @@ class WeatherApp {
         this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
         this.controlBlock.update({ ...this.state });
         this.currentWeather.update({ ...this.state });
+        this.futureWeather.update({ ...this.state });
     }
 }
 

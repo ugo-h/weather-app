@@ -9,6 +9,8 @@ export default class WeatherUI extends UI {
     render() {
         this.container.innerHTML = '';
         const currentWeather = createElement('div', { className: 'current-weather', id: 'current-weather' });
+        const forecastWeather = createElement('div', { className: 'forecast', id: 'forecast-weather' });
         this.container.append(currentWeather);
+        this.container.append(forecastWeather);
     }
 }

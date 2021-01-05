@@ -1,8 +1,9 @@
+import UI from '../../UI/UI';
 import { createElement } from '../../UI/domHelper';
 
-export default class CurrentWeatherUI {
+export default class CurrentWeatherUI extends UI {
     constructor(id) {
-        this.container = document.getElementById(id);
+        super(id);
     }
 
     render(state) {

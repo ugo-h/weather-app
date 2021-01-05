@@ -22,6 +22,20 @@ function weatherDataFacade({ current }) {
     };
 }
 
+function getFormattedForecast({ forecastday }) {
+    return forecastday.map(day => {
+        return {
+            date: day.date,
+            temp: {
+                c: day.day.avgtemp_c,
+                f: day.day.avgtemp_f
+            },
+            text: day.day.condition.text,
+            icon: day.day.condition.icon
+        };
+    });
+}
+
 export default class WeatherAPI {
     constructor() {
         this.url = 'http://api.weatherapi.com/v1';
@@ -35,5 +49,15 @@ export default class WeatherAPI {
             lang
         });
         return weatherDataFacade(data);
+    }
+
+    async getThreeDaysWeather(location, lang) {
+        const data = await fetchGetJson(`${this.url}/forecast.json`, {
+            q: location,
+            key: this.apiKey,
+            lang,
+            days: 3
+        });
+        return getFormattedForecast(data.forecast);
     }
 }
