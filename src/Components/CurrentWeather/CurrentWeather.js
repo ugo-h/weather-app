@@ -1,5 +1,5 @@
-import CurrentWeatherUI from '../UI/CurrentWeatherUI/CurrentWeatherUI';
-import WeatherAPI from '../WeatherAPI/WeatherAPI';
+import CurrentWeatherUI from './CurrentWeatherUI';
+import WeatherAPI from '../../API/WeatherAPI/WeatherAPI';
 
 export default class CurrentWeather {
     constructor(id) {

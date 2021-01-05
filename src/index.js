@@ -1,6 +1,6 @@
-import GeolocationAPI from './Geolocation/Geolocation';
-import ControlBlock from './ControlBlock/Controlblock';
-import CurrentWeather from './CurrentWeather/CurrentWeather';
+import GeolocationAPI from './API/Geolocation/Geolocation';
+import ControlBlock from './Components/ControlBlock/Controlblock';
+import CurrentWeather from './Components/CurrentWeather/CurrentWeather';
 import WeatherUI from './UI/WeatherUI';
 
 function getLanguage(data) {
@@ -13,13 +13,20 @@ function getUnits(data) {
     return units;
 }
 
-function geolocationFacade(data) {
+function getLocation(data) {
     const location = `${data.city}, ${data.country}`;
     const lat = data.loc;
     return {
         location,
         lat
     };
+}
+
+function getFormattedData(data) {
+    const geolocation = getLocation(data);
+    const language = getLanguage(data);
+    const units = getUnits(data);
+    return { ...geolocation, language, units };
 }
 
 class WeatherApp {
@@ -51,10 +58,7 @@ class WeatherApp {
         let data = localStorage.getItem('preferences');
         if (!data) {
             data = await this.geolocation.getLocation();
-            const geolocation = geolocationFacade(data);
-            const language = getLanguage(data);
-            const units = getUnits(data);
-            this.state = { ...geolocation, language, units };
+            this.state = getFormattedData(data);
             localStorage.setItem('preferences', JSON.stringify(this.state));
         } else {
             this.state = JSON.parse(data);

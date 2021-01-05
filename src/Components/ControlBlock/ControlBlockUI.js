@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import UI from '../UI';
-import { createElement } from '../domHelper';
+import UI from '../../UI/UI';
+import { createElement } from '../../UI/domHelper';
 
 export default class ControlBlockUI extends UI {
     setUnitBtnHandler(callback) {

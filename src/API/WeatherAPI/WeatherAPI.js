@@ -1,5 +1,5 @@
-import { fetchGetJson } from '../lib/lib';
-import { weatherApiKey } from '../config';
+import { fetchGetJson } from '../../lib/lib';
+import { weatherApiKey } from '../../config';
 
 function weatherDataFacade({ current }) {
     return {

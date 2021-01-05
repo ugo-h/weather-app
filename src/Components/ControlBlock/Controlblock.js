@@ -1,4 +1,4 @@
-import ControlBlockUI from '../UI/ControlBlockUI/ControlBlockUI';
+import ControlBlockUI from './ControlBlockUI';
 
 export default class ControlBlock {
     constructor(id, state) {

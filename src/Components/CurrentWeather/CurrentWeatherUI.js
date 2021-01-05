@@ -1,4 +1,4 @@
-import { createElement } from '../domHelper';
+import { createElement } from '../../UI/domHelper';
 
 export default class CurrentWeatherUI {
     constructor(id) {
