@@ -1,6 +1,8 @@
 import UI from '../../UI/UI';
 import { createElement } from '../../UI/domHelper';
 import Clock from '../Clock/Clock';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 
 export default class CurrentWeatherUI extends UI {
     constructor(id) {
@@ -11,6 +13,7 @@ export default class CurrentWeatherUI extends UI {
     render(state) {
         this.container.innerHTML = '';
         const element = createElement('div', { className: 'weather card' },
+            createElement('p', { className: 'weather__date' }, dayjs().locale(state.language.toLowerCase()).format('D MMMM (dddd)')),
             this.clock.createElement(),
             createElement('p', { className: 'weather__location' }, state.location),
             createElement('img', { className: 'weather__icon', src: state.icon }),

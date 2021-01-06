@@ -23,6 +23,7 @@ export default class CurrentWeather {
         }
         data.units = state.units;
         data.location = state.location;
+        data.language = state.language;
         this.ui.render(data);
     }
 }

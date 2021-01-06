@@ -50,6 +50,7 @@ class WeatherApp {
         this.state.units = this.state.units === 'c' ? 'f' : 'c';
         this.controlBlock.update({ ...this.state });
         this.currentWeather.update({ ...this.state });
+        this.futureWeather.update({ ...this.state });
         this.saveState();
     }
 

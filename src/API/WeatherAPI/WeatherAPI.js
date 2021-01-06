@@ -60,6 +60,6 @@ export default class WeatherAPI {
             lang: lang.toLowerCase(),
             days: 3
         });
-        return getFormattedForecast(data.forecast, lang.toLowerCase());
+        return { forecast: getFormattedForecast(data.forecast, lang.toLowerCase()) };
     }
 }
