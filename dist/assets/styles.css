@@ -41,14 +41,20 @@ body{
 .forecast{
     margin-top: 2rem;
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 .forecast__day{
-    
+   max-width: 200px;
+}
+.forecast__date{
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1rem;
 }
 .forecast__temperature{
+    margin: 1rem 0;
     font-size: 1.4rem;
     color: #666;
 }

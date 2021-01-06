@@ -1,7 +1,9 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { fetchGetJson } from '../../lib/lib';
 import { weatherApiKey } from '../../config';
 
-function weatherDataFacade({ current }) {
+function getFormattedCurrentWeather({ current }) {
     return {
         temp: {
             c: current.temp_c,
@@ -22,10 +24,10 @@ function weatherDataFacade({ current }) {
     };
 }
 
-function getFormattedForecast({ forecastday }) {
+function getFormattedForecast({ forecastday }, lang = 'en') {
     return forecastday.map(day => {
         return {
-            date: day.date,
+            date: dayjs(day.date).locale(lang).format('DD MMMM YYYY'),
             temp: {
                 c: day.day.avgtemp_c,
                 f: day.day.avgtemp_f
@@ -48,16 +50,16 @@ export default class WeatherAPI {
             key: this.apiKey,
             lang
         });
-        return weatherDataFacade(data);
+        return getFormattedCurrentWeather(data);
     }
 
     async getThreeDaysWeather(location, lang) {
         const data = await fetchGetJson(`${this.url}/forecast.json`, {
             q: location,
             key: this.apiKey,
-            lang,
+            lang: lang.toLowerCase(),
             days: 3
         });
-        return getFormattedForecast(data.forecast);
+        return getFormattedForecast(data.forecast, lang.toLowerCase());
     }
 }

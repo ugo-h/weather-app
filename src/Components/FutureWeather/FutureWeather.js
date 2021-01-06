@@ -8,7 +8,7 @@ export default class FutureWeather {
     }
 
     async update(state) {
-        const data = await this.api.getThreeDaysWeather(state.location, state.lang);
+        const data = await this.api.getThreeDaysWeather(state.location, state.language);
         this.ui.render(data);
     }
 }

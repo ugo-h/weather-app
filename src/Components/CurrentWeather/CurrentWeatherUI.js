@@ -1,14 +1,17 @@
 import UI from '../../UI/UI';
 import { createElement } from '../../UI/domHelper';
+import Clock from '../Clock/Clock';
 
 export default class CurrentWeatherUI extends UI {
     constructor(id) {
         super(id);
+        this.clock = new Clock();
     }
 
     render(state) {
         this.container.innerHTML = '';
         const element = createElement('div', { className: 'weather card' },
+            this.clock.createElement(),
             createElement('p', { className: 'weather__location' }, state.location),
             createElement('img', { className: 'weather__icon', src: state.icon }),
             createElement('div', { className: 'weather__temperature' }, state.temp[state.units] + 'º' + state.units),
