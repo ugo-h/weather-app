@@ -2,6 +2,7 @@ import GeolocationAPI from './API/Geolocation/Geolocation';
 import ControlBlock from './Components/ControlBlock/Controlblock';
 import CurrentWeather from './Components/CurrentWeather/CurrentWeather';
 import FutureWeather from './Components/FutureWeather/FutureWeather';
+import Search from './Components/Search/Search';
 import WeatherUI from './UI/WeatherUI';
 
 function getLanguage(data) {
@@ -46,9 +47,10 @@ class WeatherApp {
         this.futureWeather = new FutureWeather('forecast-weather');
     }
 
-    changeUnits() {
+    changeUnits(ev) {
+        const btnElement = ev.target;
+        btnElement.innerText = this.state.units;
         this.state.units = this.state.units === 'c' ? 'f' : 'c';
-        this.controlBlock.update({ ...this.state });
         this.currentWeather.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
         this.saveState();
@@ -69,10 +71,19 @@ class WeatherApp {
         }
     }
 
+    processSearchResult(result) {
+        this.state.lat = `${result.bounds.northeast.lat},${result.bounds.northeast.lng}`;
+        this.state.location = result.formatted;
+        this.currentWeather.update({ ...this.state });
+        this.futureWeather.update({ ...this.state });
+    }
+
     async init() {
         this.loadState();
         this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
         this.controlBlock.update({ ...this.state });
+        this.search = new Search('search', this.processSearchResult.bind(this));
+        this.search.update();
         this.currentWeather.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
     }

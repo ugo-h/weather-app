@@ -5,12 +5,15 @@ export default class FutureWeather {
     constructor(id) {
         this.api = new WeatherAPI();
         this.ui = new FutureWeatherUI(id);
-        this.state = {};
+        this.state = {
+            lat: null
+        };
         this.isRequestNeeded = true;
     }
 
     async update(state) {
         let data;
+        if (state.lat !== this.state.lat) this.isRequestNeeded = true;
         if (this.isRequestNeeded) {
             data = await this.api.getThreeDaysWeather(state.location, state.language);
             this.state = { ...state, ...data };

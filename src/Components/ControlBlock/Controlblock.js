@@ -4,11 +4,10 @@ export default class ControlBlock {
     constructor(id, state) {
         this.ui = new ControlBlockUI(id);
         this.state = state;
-        this.ui.render(this.state);
     }
 
     onChangeUnits(callback) {
-        this.ui.setUnitBtnHandler(callback);
+        this.ui.connectUnitBtnHandler(callback);
     }
 
     update(newState) {

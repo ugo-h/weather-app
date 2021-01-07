@@ -13,7 +13,8 @@ body{
     color: white;
 }
 .card{
-    padding: 3rem;
+    background: white;
+    padding: 1rem 3rem;
     border: 1px solid white;
     border-radius: 20px;
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
@@ -57,4 +58,37 @@ body{
     margin: 1rem 0;
     font-size: 1.4rem;
     color: #666;
+}
+
+.list--vertical{
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+.modal__option{
+    cursor: pointer;
+    padding: 1rem;
+}
+.modal__option:hover{
+    background:sandybrown;
+}
+.backdrop{
+    display: none;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 200;
+}
+.modal-container{
+    z-index: 300;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50%)
+}
+
+.modal__content{
+    overflow: hidden;
 }

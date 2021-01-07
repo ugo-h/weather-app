@@ -3,11 +3,11 @@ import UI from '../../UI/UI';
 import { createElement } from '../../UI/domHelper';
 
 export default class ControlBlockUI extends UI {
-    setUnitBtnHandler(callback) {
-        this.unitBtnHandler = callback;
-    }
+    _unitBtnHandler() {}
 
-    unitBtnHandler() {}
+    connectUnitBtnHandler(callback) {
+        this._unitBtnHandler = callback;
+    }
 
     render(state) {
         this.container.innerHTML = '';
@@ -15,7 +15,11 @@ export default class ControlBlockUI extends UI {
             className: 'weather__header control_pannel'
         }, createElement('div', {
             className: 'list--horizontal control_pannel__list'
-        }, createElement('button', { className: 'control_pannel__btn', onClick: this.unitBtnHandler }, state.units === 'c' ? 'º f' : 'ºc')));
+        }, createElement('button', {
+            className: 'control_pannel__btn',
+            onClick: this._unitBtnHandler
+        }, state.units === 'c' ? 'º f' : 'ºc'),
+        createElement('div', { className: 'search-container', id: 'search' })));
         this.container.append(element);
     }
 }

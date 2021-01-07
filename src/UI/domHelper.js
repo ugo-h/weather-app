@@ -5,6 +5,9 @@ export function createElement(type, props, ...children) {
         if (key === 'onClick') {
             element.addEventListener('click', props[key]);
             return;
+        } if (key === 'onSubmit') {
+            element.addEventListener('submit', props[key]);
+            return;
         }
         element[key] = props[key];
     });
