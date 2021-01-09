@@ -15,7 +15,7 @@ export default class FutureWeather {
         let data;
         if (state.lat !== this.state.lat) this.isRequestNeeded = true;
         if (this.isRequestNeeded) {
-            data = await this.api.getThreeDaysWeather(state.location, state.language);
+            data = await this.api.getThreeDaysWeather(state.lat, state.language);
             this.state = { ...state, ...data };
             this.isRequestNeeded = false;
         } else {

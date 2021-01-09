@@ -18,7 +18,6 @@ export default class SearchResultsModal {
     }
 
     backdropClickHandler() {
-        console.log('backdrop clicked');
         SearchResultsModal.unmount();
         if (this.onDecline) this.onDecline();
     }

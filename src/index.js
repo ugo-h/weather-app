@@ -4,32 +4,7 @@ import CurrentWeather from './Components/CurrentWeather/CurrentWeather';
 import FutureWeather from './Components/FutureWeather/FutureWeather';
 import Search from './Components/Search/Search';
 import WeatherUI from './UI/WeatherUI';
-
-function getLanguage(data) {
-    const language = data.country === 'RU' ? 'RU' : 'EN';
-    return language;
-}
-
-function getUnits(data) {
-    const units = data.country === 'US' ? 'f' : 'c';
-    return units;
-}
-
-function getLocation(data) {
-    const location = `${data.city}, ${data.country}`;
-    const lat = data.loc;
-    return {
-        location,
-        lat
-    };
-}
-
-function getFormattedData(data) {
-    const geolocation = getLocation(data);
-    const language = getLanguage(data);
-    const units = getUnits(data);
-    return { ...geolocation, language, units };
-}
+import { getFormattedGeolocationData } from './lib/lib';
 
 class WeatherApp {
     constructor() {
@@ -39,10 +14,11 @@ class WeatherApp {
             lat: null,
             language: null
         };
-        this.controlBlock = new ControlBlock('control', { language: this.state.language, location: this.state.location });
-        this.geolocation = new GeolocationAPI();
         this.ui = new WeatherUI('container');
         this.ui.render();
+
+        this.controlBlock = new ControlBlock('control', { language: this.state.language, location: this.state.location });
+        this.geolocation = new GeolocationAPI();
         this.currentWeather = new CurrentWeather('current-weather');
         this.futureWeather = new FutureWeather('forecast-weather');
     }
@@ -57,17 +33,18 @@ class WeatherApp {
     }
 
     saveState() {
-        localStorage.setItem('preferences', JSON.stringify(this.state));
+        const { language, units } = this.state;
+        localStorage.setItem('preferences', JSON.stringify({ language, units }));
     }
 
     async loadState() {
-        let data = localStorage.getItem('preferences');
-        if (!data) {
-            data = await this.geolocation.getLocation();
-            this.state = getFormattedData(data);
-            localStorage.setItem('preferences', JSON.stringify(this.state));
-        } else {
-            this.state = JSON.parse(data);
+        const data = await this.geolocation.getLocation();
+        this.state = getFormattedGeolocationData(data);
+        const preferences = localStorage.getItem('preferences');
+        if (preferences) {
+            const { language, units } = JSON.parse(preferences);
+            this.state.language = language;
+            this.state.units = units;
         }
     }
 
@@ -79,10 +56,11 @@ class WeatherApp {
     }
 
     async init() {
-        this.loadState();
+        await this.loadState();
         this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
         this.controlBlock.update({ ...this.state });
         this.search = new Search('search', this.processSearchResult.bind(this));
+
         this.search.update();
         this.currentWeather.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
