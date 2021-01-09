@@ -1,5 +1,5 @@
 import { fetchGetJson } from '../../lib/lib';
-import { geocodingApiKey } from '../../config';
+import { geocodingApiKey } from '../../config/config';
 /* eslint-disable object-curly-newline */
 export default class GeocodingAPI {
     constructor() {
@@ -7,10 +7,11 @@ export default class GeocodingAPI {
         this.token = geocodingApiKey;
     }
 
-    async getCoordinatesFromStr(str) {
+    async getCoordinatesFromStr(str, options = {}) {
         const data = await fetchGetJson(this.url, {
             q: str,
-            key: this.token
+            key: this.token,
+            ...options
         });
         return data;
     }

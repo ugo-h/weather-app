@@ -32,6 +32,14 @@ class WeatherApp {
         this.saveState();
     }
 
+    changeLang() {
+        this.state.language = this.state.language === 'ru' ? 'en' : 'ru';
+        this.search.update({ ...this.state });
+        this.currentWeather.update({ ...this.state });
+        this.futureWeather.update({ ...this.state });
+        this.saveState();
+    }
+
     saveState() {
         const { language, units } = this.state;
         localStorage.setItem('preferences', JSON.stringify({ language, units }));
@@ -49,7 +57,7 @@ class WeatherApp {
     }
 
     processSearchResult(result) {
-        this.state.lat = `${result.bounds.northeast.lat},${result.bounds.northeast.lng}`;
+        this.state.lat = `${result.geometry.lat},${result.geometry.lng}`;
         this.state.location = result.formatted;
         this.currentWeather.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
@@ -57,11 +65,12 @@ class WeatherApp {
 
     async init() {
         await this.loadState();
+        this.controlBlock.onChangeLanguage(this.changeLang.bind(this));
         this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
         this.controlBlock.update({ ...this.state });
-        this.search = new Search('search', this.processSearchResult.bind(this));
+        this.search = new Search('search', this.processSearchResult.bind(this), this.state.language);
 
-        this.search.update();
+        this.search.update({ ...this.state });
         this.currentWeather.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
     }

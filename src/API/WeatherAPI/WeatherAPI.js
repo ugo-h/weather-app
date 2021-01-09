@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { fetchGetJson } from '../../lib/lib';
-import { weatherApiKey } from '../../config';
+import { weatherApiKey } from '../../config/config';
 
 function getFormattedCurrentWeather({ current }) {
     return {

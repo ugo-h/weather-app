@@ -1,5 +1,5 @@
 function getLanguage(data) {
-    const language = data.country === 'RU' ? 'RU' : 'EN';
+    const language = data.country.toLowerCase() === 'ru' ? 'ru' : 'en';
     return language;
 }
 

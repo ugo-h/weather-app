@@ -10,6 +10,10 @@ export default class ControlBlock {
         this.ui.connectUnitBtnHandler(callback);
     }
 
+    onChangeLanguage(callback) {
+        this.ui.connectLangBtnHandler(callback);
+    }
+
     update(newState) {
         this.state = newState;
         this.ui.render(this.state);

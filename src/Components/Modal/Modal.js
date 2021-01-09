@@ -1,4 +1,5 @@
 import { createElement } from '../../UI/domHelper';
+import languages from '../../config/languages';
 
 export default class SearchResultsModal {
     constructor(promise, onAccept, onDecline) {
@@ -27,7 +28,8 @@ export default class SearchResultsModal {
         if (this.onAccept) this.onAccept(result);
     }
 
-    mount() {
+    mount(state) {
+        const strings = languages[state.language].strings;
         document.body.style.overflow = 'hidden';
         const backdrop = document.getElementById('backdrop');
         const modal = document.getElementById('modal');
@@ -40,7 +42,7 @@ export default class SearchResultsModal {
         this.promise.then((data) => {
             modal.innerHTML = '';
             element = createElement('div', { className: 'modal card' },
-                createElement('h2', { className: 'modal__title' }, 'Результаты'),
+                createElement('h2', { className: 'modal__title' }, strings.searchResults),
                 createElement('ul', { className: 'modal__content list--vertical' },
                     ...data.results.map(result => createElement('li', { className: 'modal__option', onClick: () => this.optionClickHandler(result) }, result.formatted))));
             modal.append(element);

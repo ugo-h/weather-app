@@ -5,8 +5,14 @@ import { createElement } from '../../UI/domHelper';
 export default class ControlBlockUI extends UI {
     _unitBtnHandler() {}
 
+    _langBtnHandler() {}
+
     connectUnitBtnHandler(callback) {
         this._unitBtnHandler = callback;
+    }
+
+    connectLangBtnHandler(callback) {
+        this._langBtnHandler = callback;
     }
 
     render(state) {
@@ -19,6 +25,10 @@ export default class ControlBlockUI extends UI {
             className: 'control_pannel__btn',
             onClick: this._unitBtnHandler
         }, state.units === 'c' ? 'º f' : 'ºc'),
+        createElement('button', {
+            className: 'control_pannel__btn',
+            onClick: this._langBtnHandler
+        }, 'Language'),
         createElement('div', { className: 'search-container', id: 'search' })));
         this.container.append(element);
     }

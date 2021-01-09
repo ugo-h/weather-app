@@ -1,5 +1,5 @@
 import { fetchGetJson } from '../../lib/lib';
-import { geolocationApiKey } from '../../config';
+import { geolocationApiKey } from '../../config/config';
 /* eslint-disable object-curly-newline */
 export default class GeolocationIpinfo {
     constructor() {
