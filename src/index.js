@@ -37,9 +37,10 @@ class WeatherApp {
 
     changeLang() {
         this.state.language = this.state.language === 'ru' ? 'en' : 'ru';
-        this.search.update({ ...this.state });
         this.currentWeather.update({ ...this.state });
+        this.search.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
+        this.controlBlock.update({ ...this.state });
         this.map.update({ ...this.state });
         this.saveState();
     }

@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import UI from '../../UI/UI';
 import { createElement } from '../../UI/domHelper';
+import language from '../../config/languages';
 
 export default class ControlBlockUI extends UI {
     _unitBtnHandler() {}
@@ -22,6 +23,8 @@ export default class ControlBlockUI extends UI {
     }
 
     render(state) {
+        const strings = language[state.language].strings;
+        this.container = document.getElementById(this.id);
         this.container.innerHTML = '';
         const element = createElement('header', {
             className: 'weather__header control_pannel'
@@ -34,11 +37,11 @@ export default class ControlBlockUI extends UI {
         createElement('button', {
             className: 'control_pannel__btn',
             onClick: this._langBtnHandler
-        }, 'Language'),
+        }, strings.language),
         createElement('button', {
             className: 'control_pannel__btn',
             onClick: this._backgroundHandler
-        }, 'Change background'),
+        }, strings.changeBackground),
         createElement('div', { className: 'search-container', id: 'search' })));
         this.container.append(element);
     }

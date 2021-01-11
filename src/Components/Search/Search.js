@@ -14,8 +14,7 @@ export default class Search {
 
     update(state) {
         this.language = state.language;
-        if (this.rerenderRequired) this.ui.render();
-        this.rerenderRequired = false;
+        this.ui.render(state);
     }
 
     onSubmit(ev) {

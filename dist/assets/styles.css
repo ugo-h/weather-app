@@ -11,6 +11,26 @@ body{
     padding: 2rem;
     background:brown;
     color: white;
+    position: relative;
+}
+.control_pannel__list{
+    width: 50%;
+}
+.control_pannel__btn{
+    border: 2px solid white;
+    color: white;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    background: none;
+}
+.control_pannel__btn:hover{
+    background: white;
+    color:brown;
+}
+.search{
+    position: absolute;
+    right:1rem;
 }
 .card{
     background: white;
@@ -88,6 +108,12 @@ body{
     list-style: none;
     display: flex;
     flex-direction: column;
+}
+.list--horizontal{
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
 }
 .modal__option{
     cursor: pointer;
