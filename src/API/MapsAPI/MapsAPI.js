@@ -2,7 +2,7 @@ import { mapsApiKey } from '../../config/config';
 import mapboxgl from 'mapbox-gl';
 
 export default class MapsAPI {
-    constructor(containerId) {
+    constructor(containerId, { lat }) {
         this.labels = [
             'country-label',
             'state-label',
@@ -22,17 +22,18 @@ export default class MapsAPI {
         mapboxgl.accessToken = this.apiKey;
         this.map = new mapboxgl.Map({
             container: this.id, // container id
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [0, 0], // starting position [lng, lat]
-            zoom: 9 // starting zoom
+            style: 'mapbox://styles/mapbox/streets-v11?optimize=true', // style URL
+            center: lat.split(',').reverse(), // starting position [lng, lat]
+            zoom: 9
         });
-        this.isLoaded = false;
+        this.isStyleLoaded = false;
     }
 
     _updateLabelsAndHandleErrors(language) {
         try {
             this._updateLabels(language);
         } catch (err) {
+            console.log('Styles are not loaded. Set language on load.');
             this.map.on('load', this._updateLabels.bind(this, language));
         }
     }
@@ -44,6 +45,10 @@ export default class MapsAPI {
                 'name_' + language
             ]);
         });
+    }
+
+    onLoad(callback) {
+        this.map.on('load', callback);
     }
 
     update(state) {

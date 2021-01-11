@@ -19,7 +19,6 @@ class WeatherApp {
         this.ui = new WeatherUI('container');
         this.ui.render();
 
-        this.map = new MapsAPI('map');
         this.controlBlock = new ControlBlock('control', { language: this.state.language, location: this.state.location });
         this.geolocation = new GeolocationAPI();
         this.currentWeather = new CurrentWeather('current-weather');
@@ -79,12 +78,14 @@ class WeatherApp {
         this.controlBlock.onChangeLanguage(this.changeLang.bind(this));
         this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
         this.controlBlock.update({ ...this.state });
+        this.map = new MapsAPI('map', this.state);
         this.search = new Search('search', this.processSearchResult.bind(this), this.state.language);
 
         this.search.update({ ...this.state });
         this.currentWeather.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
 
+        // this.map.onLoad(() => this.map.update({ ...this.state }));
         this.map.update({ ...this.state });
         this.background.render();
     }
