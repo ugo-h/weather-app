@@ -7,12 +7,18 @@ export default class ControlBlockUI extends UI {
 
     _langBtnHandler() {}
 
+    _backgroundHandler() {}
+
     connectUnitBtnHandler(callback) {
         this._unitBtnHandler = callback;
     }
 
     connectLangBtnHandler(callback) {
         this._langBtnHandler = callback;
+    }
+
+    connectBackgroundHandler(callback) {
+        this._backgroundHandler = callback;
     }
 
     render(state) {
@@ -29,6 +35,10 @@ export default class ControlBlockUI extends UI {
             className: 'control_pannel__btn',
             onClick: this._langBtnHandler
         }, 'Language'),
+        createElement('button', {
+            className: 'control_pannel__btn',
+            onClick: this._backgroundHandler
+        }, 'Change background'),
         createElement('div', { className: 'search-container', id: 'search' })));
         this.container.append(element);
     }

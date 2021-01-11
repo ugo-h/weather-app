@@ -23,7 +23,7 @@ export default class CurrentWeather {
                 { language: state.language.toLowerCase() }
             );
             const locationComponents = rawLocation.results[0].components;
-            const location = locationComponents.city || locationComponents.state + ', ' + locationComponents.country;
+            const location = (locationComponents.city || locationComponents.state) + ', ' + locationComponents.country;
             // eslint-disable-next-line no-param-reassign
             state.location = location;
             this.isRequestNeeded = true;

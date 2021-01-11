@@ -14,6 +14,10 @@ export default class ControlBlock {
         this.ui.connectLangBtnHandler(callback);
     }
 
+    onBackgroundChange(callback) {
+        this.ui.connectBackgroundHandler(callback);
+    }
+
     update(newState) {
         this.state = newState;
         this.ui.render(this.state);

@@ -4,6 +4,7 @@ import CurrentWeather from './Components/CurrentWeather/CurrentWeather';
 import FutureWeather from './Components/FutureWeather/FutureWeather';
 import Search from './Components/Search/Search';
 import WeatherUI from './UI/WeatherUI';
+import BackgroundImage from './Components/BackgroundImage/BackgroundImage';
 import { getFormattedGeolocationData } from './lib/lib';
 
 class WeatherApp {
@@ -21,6 +22,7 @@ class WeatherApp {
         this.geolocation = new GeolocationAPI();
         this.currentWeather = new CurrentWeather('current-weather');
         this.futureWeather = new FutureWeather('forecast-weather');
+        this.background = new BackgroundImage('container');
     }
 
     changeUnits(ev) {
@@ -63,8 +65,13 @@ class WeatherApp {
         this.futureWeather.update({ ...this.state });
     }
 
+    changeBackground() {
+        this.background.render();
+    }
+
     async init() {
         await this.loadState();
+        this.controlBlock.onBackgroundChange(this.changeBackground.bind(this));
         this.controlBlock.onChangeLanguage(this.changeLang.bind(this));
         this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
         this.controlBlock.update({ ...this.state });
@@ -73,6 +80,8 @@ class WeatherApp {
         this.search.update({ ...this.state });
         this.currentWeather.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
+
+        this.background.render();
     }
 }
 
