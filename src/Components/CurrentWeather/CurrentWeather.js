@@ -1,10 +1,12 @@
 import CurrentWeatherUI from './CurrentWeatherUI';
 import WeatherAPI from '../../API/WeatherAPI/WeatherAPI';
 import GeocodingAPI from '../../API/GeocodingAPI/GeocodingAPI';
+import LoadingPlaceholder from '../LoadingPlaceholder/LoadingPlaceholder';
 
 export default class CurrentWeather {
     constructor(id) {
         this.ui = new CurrentWeatherUI(id);
+        this.LoadingPlaceholder = new LoadingPlaceholder(id);
         this.api = new WeatherAPI();
         this.geocoding = new GeocodingAPI();
         this.state = {
@@ -18,6 +20,7 @@ export default class CurrentWeather {
         const hasLocationChanged = state.lat !== this.state.lat;
         const hasLanguagehanged = state.language !== this.state.language;
         if (hasLanguagehanged || hasLocationChanged) {
+            this.LoadingPlaceholder.render();
             const rawLocation = await this.geocoding.getCoordinatesFromStr(
                 state.lat,
                 { language: state.language.toLowerCase() }

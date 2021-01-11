@@ -1,5 +1,6 @@
 import { createElement } from '../../UI/domHelper';
 import languages from '../../config/languages';
+import LoadingPlaceholder from '../LoadingPlaceholder/LoadingPlaceholder';
 
 export default class SearchResultsModal {
     constructor(promise, onAccept, onDecline) {
@@ -7,6 +8,7 @@ export default class SearchResultsModal {
         this.onAccept = onAccept;
         this.onDecline = onDecline;
         this.backdropClickHandler = this.backdropClickHandler.bind(this);
+        this.loadingPlaceholder = new LoadingPlaceholder('modal');
     }
 
     static unmount() {
@@ -36,12 +38,10 @@ export default class SearchResultsModal {
         backdrop.style.display = 'block';
         backdrop.addEventListener('click', this.backdropClickHandler);
 
-        let element = createElement('div', { className: 'modal card' },
-            createElement('h2', {}, 'Loading...'));
-        modal.append(element);
+        this.loadingPlaceholder.render();
         this.promise.then((data) => {
             modal.innerHTML = '';
-            element = createElement('div', { className: 'modal card' },
+            const element = createElement('div', { className: 'modal card' },
                 createElement('h2', { className: 'modal__title' }, strings.searchResults),
                 createElement('ul', { className: 'modal__content list--vertical' },
                     ...data.results.map(result => createElement('li', { className: 'modal__option', onClick: () => this.optionClickHandler(result) }, result.formatted))));

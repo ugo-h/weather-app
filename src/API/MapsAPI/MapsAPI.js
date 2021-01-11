@@ -22,9 +22,9 @@ export default class MapsAPI {
         mapboxgl.accessToken = this.apiKey;
         this.map = new mapboxgl.Map({
             container: this.id, // container id
-            style: 'mapbox://styles/mapbox/streets-v11?optimize=true', // style URL
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
             center: lat.split(',').reverse(), // starting position [lng, lat]
-            zoom: 9
+            zoom: 8
         });
         this.isStyleLoaded = false;
     }
@@ -44,6 +44,8 @@ export default class MapsAPI {
                 'get',
                 'name_' + language
             ]);
+            // this.map.setLayoutProperty(label, 'text-ignore-placement', true);
+            // this.map.setLayoutProperty(label, 'text-allow-overlap', true);
         });
     }
 

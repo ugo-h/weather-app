@@ -85,7 +85,6 @@ class WeatherApp {
         this.currentWeather.update({ ...this.state });
         this.futureWeather.update({ ...this.state });
 
-        // this.map.onLoad(() => this.map.update({ ...this.state }));
         this.map.update({ ...this.state });
         this.background.render();
     }
