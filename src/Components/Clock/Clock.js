@@ -1,5 +1,10 @@
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import { createElement } from '../../UI/domHelper';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default class Clock {
     constructor() {
@@ -7,9 +12,9 @@ export default class Clock {
         this.timer = null;
     }
 
-    createElement() {
+    createElement(zone) {
         clearInterval(this.timer);
-        this.element = createElement('div', { className: 'weather__clock clock' }, dayjs().format('HH:mm:ss'));
+        this.element = createElement('div', { className: 'weather__clock clock' }, dayjs().tz(zone).format('HH:mm:ss'));
         this.timer = setInterval(this._update.bind(this), 1000);
         return this.element;
     }

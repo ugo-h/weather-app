@@ -28,6 +28,7 @@ body{
     width: 50%;
 }
 .control_pannel__btn{
+    min-width: 3rem;
     border: 2px solid white;
     color: white;
     border-radius: 20px;
@@ -185,7 +186,8 @@ body{
 }
 
 .modal__content{
-    overflow: hidden;
+    max-height: 80vh;
+    overflow: auto;
 }
 .loader,
 .loader:after {

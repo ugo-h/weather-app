@@ -30,19 +30,23 @@ class WeatherApp {
         const btnElement = ev.target;
         btnElement.innerText = this.state.units;
         this.state.units = this.state.units === 'c' ? 'f' : 'c';
-        this.currentWeather.update({ ...this.state });
+        this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
         this.saveState();
     }
 
     changeLang() {
         this.state.language = this.state.language === 'ru' ? 'en' : 'ru';
-        this.currentWeather.update({ ...this.state });
+        this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
         this.controlBlock.update({ ...this.state });
         this.search.update({ ...this.state });
         this.map.update({ ...this.state });
         this.saveState();
+    }
+
+    setState(object) {
+        Object.keys(object).forEach(key => { this.state[key] = object[key]; });
     }
 
     saveState() {
@@ -63,8 +67,11 @@ class WeatherApp {
 
     processSearchResult(result) {
         this.state.lat = `${result.geometry.lat},${result.geometry.lng}`;
-        this.state.location = result.formatted;
-        this.currentWeather.update({ ...this.state });
+
+        const locationComponents = result.components;
+        this.state.location = (locationComponents.city || locationComponents.state) + ', ' + locationComponents.country;
+
+        this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
         this.map.update({ ...this.state });
     }
@@ -83,7 +90,7 @@ class WeatherApp {
         this.search = new Search('search', this.processSearchResult.bind(this), this.state.language);
 
         this.search.update({ ...this.state });
-        this.currentWeather.update({ ...this.state });
+        this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
 
         this.map.update({ ...this.state });

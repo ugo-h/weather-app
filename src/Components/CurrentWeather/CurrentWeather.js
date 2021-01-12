@@ -15,21 +15,26 @@ export default class CurrentWeather {
         this.isRequestNeeded = true;
     }
 
-    async update(state) {
+    async updateGeocodingData(state, setState) {
+        const rawLocation = await this.geocoding.getCoordinatesFromStr(
+            state.lat,
+            { language: state.language.toLowerCase() }
+        );
+        const locationComponents = rawLocation.results[0].components;
+        const location = (locationComponents.city || locationComponents.state) + ', ' + locationComponents.country;
+        // eslint-disable-next-line no-param-reassign
+        state.location = location;
+        setState({ location });
+        this.isRequestNeeded = true;
+    }
+
+    async update(state, setState) {
         let data;
         const hasLocationChanged = state.lat !== this.state.lat;
         const hasLanguagehanged = state.language !== this.state.language;
         if (hasLanguagehanged || hasLocationChanged) {
             this.LoadingPlaceholder.render();
-            const rawLocation = await this.geocoding.getCoordinatesFromStr(
-                state.lat,
-                { language: state.language.toLowerCase() }
-            );
-            const locationComponents = rawLocation.results[0].components;
-            const location = (locationComponents.city || locationComponents.state) + ', ' + locationComponents.country;
-            // eslint-disable-next-line no-param-reassign
-            state.location = location;
-            this.isRequestNeeded = true;
+            this.updateGeocodingData(state, setState);
         }
         if (this.isRequestNeeded) {
             data = await this.api.getCurrentWeather(state.lat, state.language.toLowerCase());
@@ -41,6 +46,7 @@ export default class CurrentWeather {
         data.units = state.units;
         data.location = state.location;
         data.language = state.language;
+        data.timezone = state.timezone;
         this.ui.render(data);
     }
 }

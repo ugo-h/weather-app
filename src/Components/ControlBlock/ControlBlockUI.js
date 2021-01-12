@@ -33,7 +33,7 @@ export default class ControlBlockUI extends UI {
         }, createElement('button', {
             className: 'control_pannel__btn',
             onClick: this._unitBtnHandler
-        }, state.units === 'c' ? 'º f' : 'ºc'),
+        }, state.units === 'c' ? 'f' : 'c'),
         createElement('button', {
             className: 'control_pannel__btn',
             onClick: this._langBtnHandler

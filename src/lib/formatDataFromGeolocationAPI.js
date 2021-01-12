@@ -13,7 +13,8 @@ function getLocation(data) {
     const lat = data.loc;
     return {
         location,
-        lat
+        lat,
+        timezone: data.timezone
     };
 }
 
