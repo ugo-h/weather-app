@@ -12,7 +12,7 @@ export default {
             feelslike: 'Feels like',
             humidity: 'Humidity',
             wind: 'Wind',
-            windUnits: 'km/h'
+            windUnits: 'm/s'
         }
     },
     ru: {
@@ -28,7 +28,7 @@ export default {
             feelslike: 'Ощущается как',
             humidity: 'Влажность',
             wind: 'Ветер',
-            windUnits: 'км/ч'
+            windUnits: 'м/с'
         }
     }
 };

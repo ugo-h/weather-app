@@ -26,7 +26,7 @@ export default class CurrentWeatherUI extends UI {
                     createElement('p', { className: 'weather__date' }, dayjs().locale(state.language.toLowerCase()).format('dddd, D MMMM')),
                     this.clock.createElement(state.timezone),
                     createElement('div', { className: 'weather__info' }, `${strings.feelslike}: ${state.feelslike[state.units]}º${state.units}`),
-                    createElement('div', { className: 'weather__info' }, `${strings.humidity}: ${state.humidity}`),
+                    createElement('div', { className: 'weather__info' }, `${strings.humidity}: ${state.humidity}%`),
                     createElement('div', { className: 'weather__info' }, `${strings.wind}: ${state.wind.vel} ${strings.windUnits} (${state.wind.dir})`))));
         this.container.append(element);
     }

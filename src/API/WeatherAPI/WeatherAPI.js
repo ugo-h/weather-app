@@ -17,7 +17,7 @@ function getFormattedCurrentWeather({ current }) {
         summary: current.condition.text,
         humidity: current.humidity,
         wind: {
-            vel: current.wind_kph,
+            vel: Math.round((current.wind_kph * 1000) / 3600),
             dir: current.wind_dir
         }
 
