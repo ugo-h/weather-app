@@ -27,7 +27,7 @@ export default class ControlBlockUI extends UI {
         this.container = document.getElementById(this.id);
         this.container.innerHTML = '';
         const element = createElement('header', {
-            className: 'weather__header control_pannel'
+            className: 'header control_pannel'
         }, createElement('div', {
             className: 'list--horizontal control_pannel__list'
         }, createElement('button', {

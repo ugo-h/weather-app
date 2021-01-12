@@ -1,5 +1,5 @@
 import WeatherAPI from '../../API/WeatherAPI/WeatherAPI';
-import FutureWeatherUI from './FutureWeatherUI';
+import FutureWeatherUI from './ForecastWeatherUI';
 import GeocodingAPI from '../../API/GeocodingAPI/GeocodingAPI';
 
 export default class FutureWeather {

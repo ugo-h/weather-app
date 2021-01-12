@@ -9,7 +9,7 @@ export default class Clock {
 
     createElement() {
         clearInterval(this.timer);
-        this.element = createElement('div', { className: 'weather__clock' }, dayjs().format('HH:mm:ss'));
+        this.element = createElement('div', { className: 'weather__clock clock' }, dayjs().format('HH:mm:ss'));
         this.timer = setInterval(this._update.bind(this), 1000);
         return this.element;
     }

@@ -12,7 +12,7 @@ export default class SearchResultsModal {
     }
 
     static unmount() {
-        document.body.style.overflow = 'scroll';
+        document.body.style.overflow = 'auto';
         const backdrop = document.getElementById('backdrop');
         const modal = document.getElementById('modal');
         backdrop.style.display = 'none';
