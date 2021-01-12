@@ -27,7 +27,7 @@ function getFormattedCurrentWeather({ current }) {
 function getFormattedForecast({ forecastday }, lang = 'en') {
     return forecastday.map(day => {
         return {
-            date: dayjs(day.date).locale(lang).format('DD MMMM YYYY'),
+            date: dayjs(day.date).locale(lang).format('dddd, D MMMM'),
             temp: {
                 c: day.day.avgtemp_c,
                 f: day.day.avgtemp_f

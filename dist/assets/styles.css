@@ -115,6 +115,7 @@ body{
 }
 
 .forecast{
+    align-self: flex-start;
     margin-top: 1rem;
     width: 100%;
     display: flex;
