@@ -3,6 +3,7 @@ import WeatherAPI from '../../API/WeatherAPI/WeatherAPI';
 import GeocodingAPI from '../../API/GeocodingAPI/GeocodingAPI';
 import LoadingPlaceholder from '../LoadingPlaceholder/LoadingPlaceholder';
 import WeatherAPIsFacade from './WeatherAPIsFacade';
+import languageConfig from '../../config/languages';
 
 export default class CurrentWeather {
     constructor(id) {
@@ -30,17 +31,30 @@ export default class CurrentWeather {
     }
 
     async update(state, updateMainState) {
+        const strings = languageConfig[state.language].strings;
         const hasLocationChanged = state.lat !== this.state.lat;
         const hasLanguagehanged = state.language !== this.state.language;
         if (hasLanguagehanged || hasLocationChanged) {
-            await this._updateLocationAndLanguage(state, updateMainState);
+            try {
+                await this._updateLocationAndLanguage(state, updateMainState);
+                this.ui.removeError();
+            } catch (err) {
+                this.ui.displayError({ msg: strings.apiUnavailableError, className: 'weather__error' });
+                return;
+            }
             this.isRequestNeeded = true;
         }
         let weather = {};
         if (this.isRequestNeeded) {
             // we send request only if it is neccessary. For example, when the only thing
             // we update is temperature units, we do not send the request
-            weather = await this.apiFacade.getWeatherFromState(state);
+            try {
+                weather = await this.apiFacade.getWeatherFromState(state);
+                this.ui.removeError();
+            } catch (err) {
+                this.ui.displayError({ msg: strings.apiUnavailableError, className: 'weather__error' });
+                return;
+            }
             this.isRequestNeeded = false;
         }
         this.state = { ...this.state, ...weather };

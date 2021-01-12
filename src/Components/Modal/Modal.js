@@ -43,9 +43,16 @@ export default class SearchResultsModal {
             modal.innerHTML = '';
             const element = createElement('div', { className: 'modal card' },
                 createElement('h2', { className: 'modal__title' }, strings.searchResults),
-                createElement('ul', { className: 'modal__content list--vertical' },
-                    ...results.map(result => createElement('li', { className: 'modal__option', onClick: () => this.optionClickHandler(result) }, result.formatted))));
+                results.length > 0
+                    ? createElement('ul', { className: 'modal__content list--vertical' },
+                        ...results.map(result => createElement('li', {
+                            className: 'modal__option',
+                            onClick: () => this.optionClickHandler(result)
+                        }, result.formatted)))
+                    : createElement('h3', { className: 'modal__message' }, strings.emptySearchResult));
             modal.append(element);
+        }).catch(() => {
+            modal.append(createElement('h2', { className: 'modal__title' }, strings.apiUnavailableError));
         });
     }
 }

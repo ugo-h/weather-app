@@ -78,6 +78,7 @@ body{
     height: 300px;
     display: flex;
     flex-flow: column;
+    align-items: center;
 }
 .weather__header{
     margin-bottom: 2rem;
@@ -106,6 +107,18 @@ body{
     color: #ccc;
     font-size: 2rem;
 }
+/* .weather__columns{
+    width: 70%;
+} */
+.weather__column{
+    width: 50%;
+    margin: 0 1rem;
+}
+.weather__error{
+    width: 100%;
+    text-align: center;
+    color: white;
+}
 .weather__summary{
     font-size: 1.4rem;
     color: #666;
@@ -113,9 +126,11 @@ body{
 .weather__temperature{
     color: #666;
     font-size: 5rem;
+    width: 300px;
 }
 
 .forecast{
+    position: relative;
     align-self: flex-start;
     margin-top: 1rem;
     width: 100%;
@@ -149,6 +164,11 @@ body{
     min-height: 300px;
 }
 
+.error{
+    position: absolute;
+    top: 10%;
+    right: 2rem;
+}
 .list--vertical{
     padding: 0;
     list-style: none;

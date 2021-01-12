@@ -1,6 +1,7 @@
 import SearchUI from './SearchUI';
 import GeocodingAPI from '../../API/GeocodingAPI/GeocodingAPI';
 import Modal from '../Modal/Modal';
+import languageConfig from '../../config/languages';
 
 export default class Search {
     constructor(id, processResult, language = 'en') {
@@ -19,8 +20,13 @@ export default class Search {
 
     onSubmit(ev) {
         ev.preventDefault();
+        const strings = languageConfig[this.language].strings;
         const input = ev.target.querySelector('input');
-        if (input.value.trim().length < 4) return;
+        if (input.value.trim().length < 3) {
+            this.ui.displayError({ msg: strings.searchError });
+            return;
+        }
+        this.ui.removeError();
         new Modal(
             this.api.getLocationListFromStr(input.value, { language: this.language }),
             (data) => this.processResult(data)

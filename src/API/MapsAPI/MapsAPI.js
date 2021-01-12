@@ -33,7 +33,6 @@ export default class MapsAPI {
         try {
             this._updateLabels(language);
         } catch (err) {
-            console.log('Styles are not loaded. Set language on load.');
             this.map.on('load', this._updateLabels.bind(this, language));
         }
     }
