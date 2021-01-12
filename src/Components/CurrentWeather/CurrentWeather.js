@@ -2,51 +2,49 @@ import CurrentWeatherUI from './CurrentWeatherUI';
 import WeatherAPI from '../../API/WeatherAPI/WeatherAPI';
 import GeocodingAPI from '../../API/GeocodingAPI/GeocodingAPI';
 import LoadingPlaceholder from '../LoadingPlaceholder/LoadingPlaceholder';
+import WeatherAPIsFacade from './WeatherAPIsFacade';
 
 export default class CurrentWeather {
     constructor(id) {
         this.ui = new CurrentWeatherUI(id);
         this.LoadingPlaceholder = new LoadingPlaceholder(id);
-        this.api = new WeatherAPI();
-        this.geocoding = new GeocodingAPI();
+        this.apiFacade = new WeatherAPIsFacade(
+            // this facade wraps all api requests for this class
+            new WeatherAPI(),
+            new GeocodingAPI()
+        );
         this.state = {
             lat: null
         };
         this.isRequestNeeded = true;
     }
 
-    async updateGeocodingData(state, setState) {
-        const rawLocation = await this.geocoding.getCoordinatesFromStr(
-            state.lat,
-            { language: state.language.toLowerCase() }
-        );
-        const locationComponents = rawLocation.results[0].components;
-        const location = (locationComponents.city || locationComponents.state) + ', ' + locationComponents.country;
-        // eslint-disable-next-line no-param-reassign
-        state.location = location;
+    async _updateLocationAndLanguage(state, setState) {
+        this.LoadingPlaceholder.render();
+        const location = await this.apiFacade.parseLocationFromState(state);
+        this.state = { ...this.state, ...state };
+        this.state.location = location;
+        // the function below updates location in the main state of the app,
+        // in order for it to be updated in all parts of application when the change is required
         setState({ location });
-        this.isRequestNeeded = true;
     }
 
-    async update(state, setState) {
-        let data;
+    async update(state, updateMainState) {
         const hasLocationChanged = state.lat !== this.state.lat;
         const hasLanguagehanged = state.language !== this.state.language;
         if (hasLanguagehanged || hasLocationChanged) {
-            this.LoadingPlaceholder.render();
-            this.updateGeocodingData(state, setState);
+            await this._updateLocationAndLanguage(state, updateMainState);
+            this.isRequestNeeded = true;
         }
+        let weather = {};
         if (this.isRequestNeeded) {
-            data = await this.api.getCurrentWeather(state.lat, state.language.toLowerCase());
-            this.state = { ...state, ...data };
+            // we send request only if it is neccessary. For example, when the only thing
+            // we update is temperature units, we do not send the request
+            weather = await this.apiFacade.getWeatherFromState(state);
             this.isRequestNeeded = false;
-        } else {
-            data = this.state;
         }
-        data.units = state.units;
-        data.location = state.location;
-        data.language = state.language;
-        data.timezone = state.timezone;
-        this.ui.render(data);
+        this.state = { ...this.state, ...weather };
+        this.state.units = state.units;
+        this.ui.render({ ...this.state });
     }
 }

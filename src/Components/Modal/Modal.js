@@ -39,12 +39,12 @@ export default class SearchResultsModal {
         backdrop.addEventListener('click', this.backdropClickHandler);
 
         this.loadingPlaceholder.render();
-        this.promise.then((data) => {
+        this.promise.then((results) => {
             modal.innerHTML = '';
             const element = createElement('div', { className: 'modal card' },
                 createElement('h2', { className: 'modal__title' }, strings.searchResults),
                 createElement('ul', { className: 'modal__content list--vertical' },
-                    ...data.results.map(result => createElement('li', { className: 'modal__option', onClick: () => this.optionClickHandler(result) }, result.formatted))));
+                    ...results.map(result => createElement('li', { className: 'modal__option', onClick: () => this.optionClickHandler(result) }, result.formatted))));
             modal.append(element);
         });
     }

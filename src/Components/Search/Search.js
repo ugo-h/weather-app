@@ -22,7 +22,7 @@ export default class Search {
         const input = ev.target.querySelector('input');
         if (input.value.trim().length < 4) return;
         new Modal(
-            this.api.getCoordinatesFromStr(input.value, { language: this.language }),
+            this.api.getLocationListFromStr(input.value, { language: this.language }),
             (data) => this.processResult(data)
         ).mount({ language: this.language });
         input.value = '';

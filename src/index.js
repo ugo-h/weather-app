@@ -5,7 +5,7 @@ import ForecastWeather from './Components/ForecastWeather/ForecastWeather';
 import Search from './Components/Search/Search';
 import WeatherUI from './UI/WeatherUI';
 import BackgroundImage from './Components/BackgroundImage/BackgroundImage';
-import { getFormattedGeolocationData } from './lib/lib';
+import { getFormattedGeolocationData, assembleLocation } from './lib/lib';
 import MapsAPI from './API/MapsAPI/MapsAPI';
 
 class WeatherApp {
@@ -67,10 +67,7 @@ class WeatherApp {
 
     processSearchResult(result) {
         this.state.lat = `${result.geometry.lat},${result.geometry.lng}`;
-
-        const locationComponents = result.components;
-        this.state.location = (locationComponents.city || locationComponents.state) + ', ' + locationComponents.country;
-
+        this.state.location = assembleLocation(result.components);
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
         this.map.update({ ...this.state });
