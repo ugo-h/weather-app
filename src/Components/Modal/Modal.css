@@ -29,6 +29,9 @@
 @media(max-width: 900px){
     .modal-container{
         width: 90%;
-        height: 80vh;
+        max-height: 80vh;
+    }
+    .modal__content{
+        max-height: 60vh;
     }
 }
