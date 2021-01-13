@@ -5,7 +5,11 @@ import ForecastWeather from './Components/ForecastWeather/ForecastWeather';
 import Search from './Components/Search/Search';
 import WeatherUI from './UI/WeatherUI';
 import BackgroundImage from './Components/BackgroundImage/BackgroundImage';
-import { getFormattedGeolocationData, assembleLocation } from './lib/lib';
+import {
+    getFormattedGeolocationData,
+    assembleLocation,
+    scrollToTop
+} from './lib/lib';
 import MapsAPI from './API/MapsAPI/MapsAPI';
 
 class WeatherApp {
@@ -71,6 +75,7 @@ class WeatherApp {
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
         this.map.update({ ...this.state });
+        scrollToTop();
     }
 
     changeBackground() {

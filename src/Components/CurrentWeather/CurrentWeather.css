@@ -36,17 +36,10 @@
 .weather__date::first-letter{
     text-transform: capitalize;
 }
-.group{
-    align-items: center;
-    display: flex;
-}
 .weather__info{
     margin: 1rem 0;
 }
 
-/* .weather__columns{
-    width: 70%;
-} */
 .weather__column{
     width: 50%;
     margin: 0 1rem;
@@ -64,4 +57,26 @@
     color: #666;
     font-size: 5rem;
     width: 300px;
+}
+
+@media(max-width: 900px){
+    .current-weather{
+        margin: 0;
+        width: 90%;
+        max-width: 500px;
+    }
+    .weather{
+        height: auto;
+    }
+    .main-weather{
+        flex-flow: column;
+    }
+    .weather__columns{
+        flex-flow: column;
+        align-items: center;
+    }
+    .weather__column{
+        margin:0;
+        width: 100%;
+    }
 }

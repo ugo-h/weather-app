@@ -23,3 +23,18 @@
     background: white;
     color: brown;
 }
+
+@media(max-width: 900px){
+    .header-container{
+        position: fixed;
+        bottom: 0;
+        z-index: 5;
+        width: 100%;
+    }
+    .header{
+        height: 18vh;
+    }
+    .control_pannel__list{
+        width: 100%;
+    }
+}

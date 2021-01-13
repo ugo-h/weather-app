@@ -20,3 +20,14 @@
     font-size: 2rem;
     color: #666;
 }
+
+@media(max-width: 900px){
+    .forecast{
+        flex-flow: column;
+        align-items: center;
+        margin-bottom: 7rem;
+    }
+    .forecast__day{
+        margin: 1rem 0;
+    }
+}

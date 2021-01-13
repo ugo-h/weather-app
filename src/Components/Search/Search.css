@@ -4,3 +4,22 @@
     position: absolute;
     right:1rem;
 }
+
+@media(max-width: 900px){
+    .search{
+        display: none;
+        top:0;
+        right:0;
+        position: relative;
+        transform: translate(0, 0);
+    }
+    /* .search-container::before{
+         content: 'Search'
+    }
+    .search-container:hover .search{
+        display: block;
+    }
+    .search-container:hover .search-container::before{
+        content: normal;
+    } */
+}
