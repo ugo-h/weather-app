@@ -1,6 +1,15 @@
+import Component from './UIComponent';
+
 /* eslint-disable no-param-reassign */
 export function createElement(type, props, ...children) {
-    const element = document.createElement(type);
+    let element;
+    if (type.prototype instanceof Component) {
+        let ElementConstructor = type;
+        props.children = children;
+        element = new ElementConstructor(props).createElement();
+        return element;
+    }
+    element = document.createElement(type);
     Object.keys(props).forEach(key => {
         if (key === 'onClick') {
             element.addEventListener('click', props[key]);
