@@ -2,6 +2,7 @@
 import UI from '../../UI/UI';
 import { createElement } from '../../UI/domHelper';
 import language from '../../config/languages';
+import './Controlblock.css';
 
 export default class ControlBlockUI extends UI {
     _unitBtnHandler() {}

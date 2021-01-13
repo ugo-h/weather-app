@@ -1,6 +1,7 @@
 import { createElement } from '../../UI/domHelper';
 import languages from '../../config/languages';
 import LoadingPlaceholder from '../LoadingPlaceholder/LoadingPlaceholder';
+import './Modal.css';
 
 export default class SearchResultsModal {
     constructor(promise, onAccept, onDecline) {

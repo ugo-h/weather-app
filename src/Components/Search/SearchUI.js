@@ -2,6 +2,7 @@
 import { createElement } from '../../UI/domHelper';
 import UI from '../../UI/UI';
 import language from '../../config/languages';
+import './Search.css';
 
 export default class SearchUI extends UI {
     submitHandler() {}

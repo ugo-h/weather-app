@@ -4,6 +4,7 @@ import Clock from '../Clock/Clock';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import languages from '../../config/languages';
+import './CurrentWeather.css';
 
 export default class CurrentWeatherUI extends UI {
     constructor(id) {

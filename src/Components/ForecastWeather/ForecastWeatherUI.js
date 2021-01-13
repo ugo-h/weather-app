@@ -1,5 +1,6 @@
 import UI from '../../UI/UI';
 import { createElement } from '../../UI/domHelper';
+import './ForecastWeather.css';
 
 export default class FutureWeatherUI extends UI {
     constructor(id) {

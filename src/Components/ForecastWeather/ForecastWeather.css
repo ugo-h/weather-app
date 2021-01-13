@@ -1,0 +1,22 @@
+.forecast{
+    position: relative;
+    align-self: flex-start;
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.forecast__day{
+   margin: 0 1rem;
+   width: 300px;
+}
+.forecast__date{
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+.forecast__temperature{
+    margin: 1rem 0;
+    font-size: 2rem;
+    color: #666;
+}

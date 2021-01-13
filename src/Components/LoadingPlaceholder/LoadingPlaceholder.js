@@ -1,4 +1,5 @@
 import { createElement } from '../../UI/domHelper';
+import './LoadingPlaceholder.css';
 
 export default class LoadingPlaceholder {
     constructor(id) {
