@@ -75,11 +75,12 @@ class WeatherApp {
     }
 
     changeBackground() {
-        this.background.render();
+        this.background.apply();
     }
 
     async init() {
         await this.loadState();
+        this.background.apply();
         this.map = new MapsAPI('map', this.state);
         this.controlBlock = new ControlBlock('control', {
             language: this.state.language,
@@ -97,7 +98,6 @@ class WeatherApp {
         this.forecastWeather.update({ ...this.state });
 
         this.map.update({ ...this.state });
-        this.background.render();
     }
 
     // eslint-disable-next-line class-methods-use-this

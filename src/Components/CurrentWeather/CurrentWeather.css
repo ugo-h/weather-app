@@ -20,43 +20,50 @@
 .weather{
     width: 100%;
     height: 300px;
-    display: flex;
-    flex-flow: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "location date"
+                         "temperature time"
+                         "temperature items"
+                         "summary items";
     align-items: center;
-}
-.weather__header{
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .weather__clock{
-    margin-bottom: 3rem;
+    grid-area: time;
+    /* margin-bottom: 3rem; */
 }
 .weather__date::first-letter{
     text-transform: capitalize;
 }
-.weather__info{
-    margin: 1rem 0;
+.weather-info{
+    grid-area: items;
+}
+.weather-info__item{
+    margin: 0.5rem 0;
 }
 
-.weather__column{
-    width: 50%;
-    margin: 0 1rem;
-}
 .weather__error{
     width: 100%;
     text-align: center;
     color: white;
 }
+.weather__description{
+    grid-column: 1;
+    grid-row: 4;
+}
 .weather__summary{
     font-size: 1.4rem;
     color: #666;
+    grid-area: summary;
 }
 .weather__temperature{
     color: #666;
     font-size: 5rem;
     width: 300px;
+    grid-area: temperature;
 }
 
 @media(max-width: 900px){
@@ -66,23 +73,29 @@
         max-width: 500px;
     }
     .weather{
+        justify-items: center;
         height: auto;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: auto;
+        grid-template-areas: "location date"
+                            "time time"
+                            "temperature temperature"
+                            "summary summary"
+                            "items items"
     }
     .main-weather{
         flex-flow: column;
     }
-    .weather__columns{
-        flex-flow: column;
-        align-items: center;
+    .weather__date{
+        font-size: 0.8rem;
+        min-width: 100px;
     }
-    .weather__column{
-        margin:0;
-        width: 100%;
-        display: flex;
-        flex-direction:  column;
-        align-items: center;
+    .weather__location{
+        font-size: 0.8rem;
     }
     .weather__temperature{
         text-align: center;
+        margin-top: 1rem;
     }
+
 }

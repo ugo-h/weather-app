@@ -7,7 +7,7 @@ export default class BackgroundImage {
         this.default = 'https://www.lukas-petereit.com/wp-content/uploads/2018/08/Sunset-at-Verdon-Canyon-Landscape-of-Provence-Photography-in-France.jpg';
     }
 
-    async render() {
+    async apply() {
         let imgUrl;
         try {
             imgUrl = await this.api.getRandom();
