@@ -1,9 +1,15 @@
 .slider-menu-btn{
     display: none;
 }
+.slider-menu{
+    display: none;
+}
 
 @media(max-width: 900px) {
     .slider-menu-btn{
+        display: block;
+    }
+    .slider-menu{
         display: block;
     }
 }

@@ -2,7 +2,6 @@ import GeolocationAPI from './API/Geolocation/Geolocation';
 import ControlBlock from './Components/ControlBlock/Controlblock';
 import CurrentWeather from './Components/CurrentWeather/CurrentWeather';
 import ForecastWeather from './Components/ForecastWeather/ForecastWeather';
-import Search from './Components/Search/Search';
 import WeatherUI from './UI/WeatherUI';
 import BackgroundImage from './Components/BackgroundImage/BackgroundImage';
 import {
@@ -23,7 +22,7 @@ class WeatherApp {
         this.ui = new WeatherUI('container');
         this.ui.render();
 
-        this.controlBlock = new ControlBlock('control', { language: this.state.language, location: this.state.location });
+
         this.geolocation = new GeolocationAPI();
         this.currentWeather = new CurrentWeather('current-weather');
         this.forecastWeather = new ForecastWeather('forecast-weather');
@@ -44,7 +43,7 @@ class WeatherApp {
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
         this.controlBlock.update({ ...this.state });
-        this.search.update({ ...this.state });
+
         this.map.update({ ...this.state });
         this.saveState();
     }
@@ -84,14 +83,20 @@ class WeatherApp {
 
     async init() {
         await this.loadState();
-        this.controlBlock.onBackgroundChange(this.changeBackground.bind(this));
-        this.controlBlock.onChangeLanguage(this.changeLang.bind(this));
-        this.controlBlock.onChangeUnits(this.changeUnits.bind(this));
+        this.controlBlock = new ControlBlock('control', {
+            language: this.state.language,
+            location: this.state.location
+        },
+        {
+            onBackgroundChange: this.changeBackground.bind(this),
+            onChangeLanguage: this.changeLang.bind(this),
+            onChangeUnits: this.changeUnits.bind(this),
+            onSearch: this.processSearchResult.bind(this)
+        });
+
         this.controlBlock.update({ ...this.state });
         this.map = new MapsAPI('map', this.state);
-        this.search = new Search('search', this.processSearchResult.bind(this), this.state.language);
 
-        this.search.update({ ...this.state });
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
 

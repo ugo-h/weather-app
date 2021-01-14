@@ -1,5 +1,6 @@
 import { createElement } from '../../../UI/domHelper';
 import UIComponent from '../../../UI/UIComponent';
+import './SliderMenu.css';
 
 export default class SliderMenu extends UIComponent {
     createElement() {

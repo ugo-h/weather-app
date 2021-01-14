@@ -1,8 +1,9 @@
 import { createElement } from './domHelper';
 
 export default class UI {
-    constructor(id) {
+    constructor(id, eventHandlers = {}) {
         this.id = id;
+        this.eventHandlers = eventHandlers;
         this.container = document.getElementById(id);
         this.error = null;
     }
