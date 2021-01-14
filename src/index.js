@@ -10,6 +10,7 @@ import {
     scrollToTop
 } from './lib/lib';
 import MapsAPI from './API/MapsAPI/MapsAPI';
+import { createElement, render } from './UI/domHelper';
 
 class WeatherApp {
     constructor() {
@@ -19,9 +20,7 @@ class WeatherApp {
             lat: null,
             language: null
         };
-        this.ui = new WeatherUI('container');
-        this.ui.render();
-
+        this.render();
         this.geolocation = new GeolocationAPI();
         this.currentWeather = new CurrentWeather('current-weather');
         this.forecastWeather = new ForecastWeather('forecast-weather');
@@ -94,12 +93,16 @@ class WeatherApp {
         });
 
         this.controlBlock.update({ ...this.state });
-
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
 
         this.map.update({ ...this.state });
         this.background.render();
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    render() {
+        render(createElement(WeatherUI, {}), 'container');
     }
 }
 

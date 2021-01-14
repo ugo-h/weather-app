@@ -1,12 +1,12 @@
 import WeatherAPI from '../../API/WeatherAPI/WeatherAPI';
-import FutureWeatherUI from './ForecastWeatherUI';
+import ForecastWeatherUI from './ForecastWeatherUI';
 import LoadingPlaceholder from '../LoadingPlaceholder/LoadingPlaceholder';
-import languageConfig from '../../config/languages';
+import { createElement, render } from '../../UI/domHelper';
 
 export default class FutureWeather {
     constructor(id) {
         this.api = new WeatherAPI();
-        this.ui = new FutureWeatherUI(id);
+        this.id = id;
         this.LoadingPlaceholder = new LoadingPlaceholder(id);
         this.state = {
             lat: null
@@ -15,8 +15,7 @@ export default class FutureWeather {
     }
 
     async update(state) {
-        let data;
-        const strings = languageConfig[state.language].strings;
+        let data = {};
         const hasLocationChanged = state.lat !== this.state.lat;
         const hasLanguageChanged = state.language !== this.state.language;
         if (hasLocationChanged || hasLanguageChanged) this.isRequestNeeded = true;
@@ -24,18 +23,18 @@ export default class FutureWeather {
             this.LoadingPlaceholder.render();
             try {
                 data = await this.api.getThreeDaysWeather(state.lat, state.language);
-                this.ui.removeError();
             } catch {
-                this.ui.displayError({ msg: strings.apiUnavailableError, className: 'weather__error' });
                 return;
             }
-            this.state = { ...state, ...data };
             this.isRequestNeeded = false;
-        } else {
-            data = this.state;
         }
-        data.units = state.units;
-        data.location = state.location;
-        this.ui.render(data);
+        this.state = { ...state, ...data };
+        this.state.units = state.units;
+        this.state.location = state.location;
+        this.render();
+    }
+
+    render() {
+        render(createElement(ForecastWeatherUI, { ...this.state }), this.id);
     }
 }

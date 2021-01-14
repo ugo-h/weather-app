@@ -29,5 +29,9 @@ export function createElement(type, props, ...children) {
 export function render(element, id) {
     const container = document.getElementById(id);
     container.innerHTML = '';
+    if (element instanceof Array) {
+        element.forEach(el => container.append(el));
+        return;
+    }
     container.append(element);
 }

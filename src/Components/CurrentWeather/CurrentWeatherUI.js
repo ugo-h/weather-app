@@ -1,34 +1,32 @@
-import UI from '../../UI/UI';
 import { createElement } from '../../UI/domHelper';
 import Clock from '../Clock/Clock';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import languages from '../../config/languages';
 import './CurrentWeather.css';
+import UIComponent from '../../UI/UIComponent';
 
-export default class CurrentWeatherUI extends UI {
-    constructor(id) {
-        super(id);
-        this.clock = new Clock();
-    }
+export default class CurrentWeatherUI extends UIComponent {
+    createElement() {
+        const { language, temp, units } = this.props;
+        const strings = languages[language].strings;
 
-    render(state) {
-        this.container.innerHTML = '';
-        const strings = languages[state.language].strings;
-        const element = createElement('div', { className: 'weather card' },
+        const feelslike = `${strings.feelslike}: ${this.props.feelslike[units]}º${units}`;
+        const humidity = `${strings.humidity}: ${this.props.humidity}%`;
+        const wind = `${strings.wind}: ${this.props.wind.vel} ${strings.windUnits} (${this.props.wind.dir})`;
+        return createElement('div', { className: 'weather card' },
             createElement('div', { className: 'weather__columns columns' },
                 createElement('div', { className: 'columns__column weather__column' },
-                    createElement('p', { className: 'weather__location card__text' }, state.location),
-                    createElement('div', { className: 'weather__temperature card__text' }, state.temp[state.units] + 'º' + state.units),
+                    createElement('p', { className: 'weather__location card__text' }, this.props.location),
+                    createElement('div', { className: 'weather__temperature card__text' }, temp[units] + 'º' + units),
                     createElement('div', { className: 'group' },
-                        createElement('img', { className: 'weather__icon', src: state.icon }),
-                        createElement('p', { className: 'weather__summary card__text' }, state.summary))),
+                        createElement('img', { className: 'weather__icon', src: this.props.icon }),
+                        createElement('p', { className: 'weather__summary card__text' }, this.props.summary))),
                 createElement('div', { className: 'columns__column weather__column' },
-                    createElement('p', { className: 'weather__date card__text' }, dayjs().locale(state.language.toLowerCase()).format('dddd, D MMMM')),
-                    this.clock.createElement(state.timezone),
-                    createElement('div', { className: 'weather__info card__text' }, `${strings.feelslike}: ${state.feelslike[state.units]}º${state.units}`),
-                    createElement('div', { className: 'weather__info card__text' }, `${strings.humidity}: ${state.humidity}%`),
-                    createElement('div', { className: 'weather__info card__text' }, `${strings.wind}: ${state.wind.vel} ${strings.windUnits} (${state.wind.dir})`))));
-        this.container.append(element);
+                    createElement('p', { className: 'weather__date card__text' }, dayjs().locale(language.toLowerCase()).format('dddd, D MMMM')),
+                    createElement(Clock, {}),
+                    createElement('div', { className: 'weather__info card__text' }, feelslike),
+                    createElement('div', { className: 'weather__info card__text' }, humidity),
+                    createElement('div', { className: 'weather__info card__text' }, wind))));
     }
 }

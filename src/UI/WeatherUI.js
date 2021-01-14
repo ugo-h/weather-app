@@ -1,21 +1,16 @@
-import UI from './UI';
+/* eslint-disable class-methods-use-this */
 import { createElement } from './domHelper';
+import UIComponent from './UIComponent';
 
-export default class WeatherUI extends UI {
-    constructor(id) {
-        super(id);
-    }
-
-    render() {
-        this.container.innerHTML = '';
-        const mainWeatherSection = createElement(
-            'section', { className: 'main-weather' },
-            createElement('div', { className: 'current-weather', id: 'current-weather' }),
-            createElement('div', { className: 'map', id: 'map' })
-        );
-        const forecastWeather = createElement('div', { className: 'forecast', id: 'forecast-weather' });
-
-        this.container.append(mainWeatherSection);
-        this.container.append(forecastWeather);
+export default class WeatherUI extends UIComponent {
+    createElement() {
+        return [
+            createElement(
+                'section', { className: 'main-weather' },
+                createElement('div', { className: 'current-weather', id: 'current-weather' }),
+                createElement('div', { className: 'map', id: 'map' })
+            ),
+            createElement('div', { className: 'forecast', id: 'forecast-weather' })
+        ];
     }
 }

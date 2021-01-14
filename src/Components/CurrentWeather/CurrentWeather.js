@@ -3,11 +3,12 @@ import WeatherAPI from '../../API/WeatherAPI/WeatherAPI';
 import GeocodingAPI from '../../API/GeocodingAPI/GeocodingAPI';
 import LoadingPlaceholder from '../LoadingPlaceholder/LoadingPlaceholder';
 import WeatherAPIsFacade from './WeatherAPIsFacade';
-import languageConfig from '../../config/languages';
+// import languageConfig from '../../config/languages';
+import { createElement, render } from '../../UI/domHelper';
 
 export default class CurrentWeather {
     constructor(id) {
-        this.ui = new CurrentWeatherUI(id);
+        this.id = id;
         this.LoadingPlaceholder = new LoadingPlaceholder(id);
         this.apiFacade = new WeatherAPIsFacade(
             // this facade wraps all api requests for this class
@@ -31,15 +32,13 @@ export default class CurrentWeather {
     }
 
     async update(state, updateMainState) {
-        const strings = languageConfig[state.language].strings;
+        // const strings = languageConfig[state.language].strings;
         const hasLocationChanged = state.lat !== this.state.lat;
         const hasLanguagehanged = state.language !== this.state.language;
         if (hasLanguagehanged || hasLocationChanged) {
             try {
                 await this._updateLocationAndLanguage(state, updateMainState);
-                this.ui.removeError();
             } catch (err) {
-                this.ui.displayError({ msg: strings.apiUnavailableError, className: 'weather__error' });
                 return;
             }
             this.isRequestNeeded = true;
@@ -50,15 +49,20 @@ export default class CurrentWeather {
             // we update is temperature units, we do not send the request
             try {
                 weather = await this.apiFacade.getWeatherFromState(state);
-                this.ui.removeError();
             } catch (err) {
-                this.ui.displayError({ msg: strings.apiUnavailableError, className: 'weather__error' });
                 return;
             }
             this.isRequestNeeded = false;
         }
         this.state = { ...this.state, ...weather };
         this.state.units = state.units;
-        this.ui.render({ ...this.state });
+        this.render();
+    }
+
+    render() {
+        render(
+            createElement(CurrentWeatherUI, { ...this.state }),
+            this.id
+        );
     }
 }
