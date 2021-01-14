@@ -4,7 +4,7 @@ import './SliderMenu.css';
 
 export default class SliderMenu extends UIComponent {
     createElement() {
-        return createElement('ul', { className: 'slider-menu hidden' },
+        return createElement('ul', { className: 'slider-menu list--horizontal hidden' },
             ...this.props.buttons.map(buttonElement => createElement(
                 'li', { className: 'slider-menu__element' }, buttonElement
             )));

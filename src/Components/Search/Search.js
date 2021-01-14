@@ -23,6 +23,11 @@ export default class Search extends UIComponent {
 
     createElement() {
         const { language } = this.props;
-        return createElement(SearchForm, { language, submitHandler: this.onSubmit.bind(this) });
+        const hiddenClassName = this.props.isMenuOpen ? ' hidden-mobile' : '';
+        return createElement(SearchForm, {
+            language,
+            submitHandler: this.onSubmit.bind(this),
+            className: hiddenClassName
+        });
     }
 }

@@ -1,6 +1,7 @@
 import { createElement } from '../../UI/domHelper';
 import UIComponent from '../../UI/UIComponent';
 import languageConfig from '../../config/languages';
+import './Search.css';
 
 export default class SearchForm extends UIComponent {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class SearchForm extends UIComponent {
     }
 
     createElement() {
-        return createElement('form', { className: 'search', onSubmit: this.props.submitHandler },
+        return createElement('form', { className: 'search' + this.props.className, onSubmit: this.props.submitHandler },
             createElement('label', { className: 'search__field' },
                 createElement('input', { className: 'search__input', placeholder: `${this.strings.enterLocation}` })),
             createElement('button', { className: 'search__btn', type: 'submit' }, this.strings.search));

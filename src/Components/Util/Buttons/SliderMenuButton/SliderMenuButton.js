@@ -5,6 +5,6 @@ export default class SliderMenuButton extends Button {
     constructor(props) {
         super(props);
         this.iconUrl = '';
-        this.content = 'Menu';
+        this.content = props.content;
     }
 }

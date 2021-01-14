@@ -22,9 +22,12 @@
         transform: translate(0, 0);
     }
     .search__input{
-        padding: 1rem;
+        padding: 0.5rem;
     }
     .search__btn{
-        padding: 1rem;
+        padding: 0.5rem;
+    }
+    .search.hidden-mobile{
+        display: none;
     }
 }
