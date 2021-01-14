@@ -28,12 +28,11 @@ class WeatherApp {
         this.background = new BackgroundImage('container');
     }
 
-    changeUnits(ev) {
-        const btnElement = ev.target;
-        btnElement.innerText = this.state.units;
+    changeUnits() {
         this.state.units = this.state.units === 'c' ? 'f' : 'c';
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
+        this.controlBlock.update({ ...this.state });
         this.saveState();
     }
 

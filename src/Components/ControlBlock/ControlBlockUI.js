@@ -17,7 +17,8 @@ export default class ControlBlockUI extends UIComponent {
                 onClick: this.props.toggleSliderMenuHandler,
                 language,
                 className: 'slider-menu-btn',
-                content: sliderBtnContent
+                content: sliderBtnContent,
+                isMenuOpen
             }),
             isMenuOpen ? createElement(SliderMenu, {
                 buttons: createElement(ButtonList, this.props)

@@ -13,7 +13,10 @@ export default {
             windUnits: 'm/s',
             buttons: {
                 changeLanguageBtn: 'Language(en/ru)',
-                changeBackgroundBtn: 'Background'
+                changeBackgroundBtn: 'Background',
+                changeUnitsBtn: 'Temperature(С/F)',
+                searchBtn: 'Search',
+                settingsBtn: 'Settings'
             }
         }
     },
@@ -31,7 +34,10 @@ export default {
             windUnits: 'м/с',
             buttons: {
                 changeLanguageBtn: 'Язык(анг/рус)',
-                changeBackgroundBtn: 'Фон'
+                changeBackgroundBtn: 'Фон',
+                changeUnitsBtn: 'Температура(С/F)',
+                searchBtn: 'Поиск',
+                settingsBtn: 'Настройки'
             }
         }
     }

@@ -7,7 +7,7 @@
 
 @media(max-width: 900px) {
     .slider-menu-btn{
-        display: block;
+        display: flex;
     }
     .slider-menu{
         width: 80%;

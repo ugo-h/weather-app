@@ -12,7 +12,7 @@ export default class Button extends UIComponent {
     createElement() {
         const className = ` ${this.props.className}` || '';
         return createElement('button', { className: 'control_pannel__btn' + className, onClick: this.props.onClick },
-            createElement('img', { href: this.iconUrl, className: 'btn__icon' }),
+            createElement('img', { src: this.iconUrl, className: 'control_pannel__icon' }),
             this.content);
     }
 }

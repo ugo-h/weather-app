@@ -9,7 +9,7 @@ export default class Buttons extends UIComponent {
     createElement() {
         const { language, units } = this.props;
         return createElement(Fragment, { },
-            createElement(UnitsButton, { onClick: this.props.unitBtnHandler, units }),
+            createElement(UnitsButton, { onClick: this.props.unitBtnHandler, units, language }),
             createElement(LanguageButton, { onClick: this.props.langBtnHandler, language }),
             createElement(BackgroundButton, { onClick: this.props.backgroundHandler, language }));
     }

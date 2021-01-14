@@ -21,7 +21,7 @@ body{
 }
 
 .card{
-    background: white;
+    background: #f1f1f1;
     padding: 1rem 3rem;
     border: 1px solid white;
     border-radius: 20px;
@@ -29,7 +29,7 @@ body{
 }
 
 .card--transparent{
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.1);
     border: 1px solid transparent;
 }
 .card--transparent .card__text{

@@ -14,6 +14,6 @@ export default class BackgroundImage {
         } catch (err) {
             imgUrl = this.default;
         }
-        this.container.style.background = `center / cover no-repeat url(${imgUrl}) fixed`;
+        this.container.style.background = `rgba(0,0,0,0.1) center / cover no-repeat url(${imgUrl}) fixed`;
     }
 }
