@@ -25,3 +25,9 @@ export function createElement(type, props, ...children) {
     });
     return element;
 }
+
+export function render(element, id) {
+    const container = document.getElementById(id);
+    container.innerHTML = '';
+    container.append(element);
+}

@@ -22,7 +22,6 @@ class WeatherApp {
         this.ui = new WeatherUI('container');
         this.ui.render();
 
-
         this.geolocation = new GeolocationAPI();
         this.currentWeather = new CurrentWeather('current-weather');
         this.forecastWeather = new ForecastWeather('forecast-weather');
@@ -83,6 +82,7 @@ class WeatherApp {
 
     async init() {
         await this.loadState();
+        this.map = new MapsAPI('map', this.state);
         this.controlBlock = new ControlBlock('control', {
             language: this.state.language,
             location: this.state.location
@@ -95,7 +95,6 @@ class WeatherApp {
         });
 
         this.controlBlock.update({ ...this.state });
-        this.map = new MapsAPI('map', this.state);
 
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });

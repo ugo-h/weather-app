@@ -6,7 +6,7 @@ import UnitsButton from '../Util/Buttons/UnitsButton/UnitsButton';
 import './Controlblock.css';
 import SliderMenuButton from '../Util/Buttons/SliderMenuButton/SliderMenuButton';
 import SliderMenu from './SliderMenu/SliderMenu';
-import SearchElement from '../Search/SearchElement';
+import Search from '../Search/Search';
 import UIComponent from '../../UI/UIComponent';
 
 export default class ControlBlockUI extends UIComponent {
@@ -21,7 +21,7 @@ export default class ControlBlockUI extends UIComponent {
             createElement('div', { className: 'list--horizontal control_pannel__list' },
                 ...buttonsArray),
             this.props.isMenuOpen ? createElement(SliderMenu, { buttons: buttonsArray }) : '',
-            createElement(SliderMenuButton, { onClick: this.props._toggleSliderMenu, language, className: 'slider-menu-btn' }),
-            createElement(SearchElement, { language, submitHandler: this.props.searchHandler }));
+            createElement(SliderMenuButton, { onClick: this.props.toggleSliderMenuHandler, language, className: 'slider-menu-btn' }),
+            createElement(Search, { language, processResult: this.props.searchHandler }));
     }
 }

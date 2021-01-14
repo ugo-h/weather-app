@@ -1,36 +1,28 @@
-import SearchUI from './SearchUI';
+import SearchForm from './SearchForm';
 import GeocodingAPI from '../../API/GeocodingAPI/GeocodingAPI';
 import Modal from '../Modal/Modal';
-import languageConfig from '../../config/languages';
+import UIComponent from '../../UI/UIComponent';
+import { createElement } from '../../UI/domHelper';
 
-export default class Search {
-    constructor(id, processResult, language = 'en') {
-        this.ui = new SearchUI(id);
+export default class Search extends UIComponent {
+    constructor(props) {
+        super(props);
         this.api = new GeocodingAPI();
-        this.language = language;
-        this.ui.connectSubmitEvent(this.onSubmit.bind(this));
-        this.processResult = processResult;
-        this.rerenderRequired = true;
-    }
-
-    update(state) {
-        this.language = state.language;
-        this.ui.render(state);
     }
 
     onSubmit(ev) {
         ev.preventDefault();
-        const strings = languageConfig[this.language].strings;
+        const { language } = this.props;
         const input = ev.target.querySelector('input');
-        if (input.value.trim().length < 3) {
-            this.ui.displayError({ msg: strings.searchError });
-            return;
-        }
-        this.ui.removeError();
         new Modal(
-            this.api.getLocationListFromStr(input.value, { language: this.language }),
-            (data) => this.processResult(data)
-        ).mount({ language: this.language });
+            this.api.getLocationListFromStr(input.value, { language }),
+            (data) => this.props.processResult(data)
+        ).mount({ language });
         input.value = '';
+    }
+
+    createElement() {
+        const { language } = this.props;
+        return createElement(SearchForm, { language, submitHandler: this.onSubmit.bind(this) });
     }
 }

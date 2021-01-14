@@ -2,7 +2,7 @@ import { createElement } from '../../UI/domHelper';
 import UIComponent from '../../UI/UIComponent';
 import languageConfig from '../../config/languages';
 
-export default class SearchElement extends UIComponent {
+export default class SearchForm extends UIComponent {
     constructor(props) {
         super(props);
         this.strings = languageConfig[props.language].strings;
