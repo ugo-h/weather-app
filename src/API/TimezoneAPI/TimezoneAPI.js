@@ -3,7 +3,7 @@ import { fetchGetJson } from '../../lib/lib';
 
 export default class TimezoneAPI {
     constructor() {
-        this.url = 'http://api.geonames.org/timezoneJSON';
+        this.url = 'https://api.geonames.org/timezoneJSON';
         this.username = timezoneApiUsername;
     }
 
