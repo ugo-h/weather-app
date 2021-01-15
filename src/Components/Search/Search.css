@@ -20,6 +20,13 @@
 .full-opacity{
     opacity: 1;
 }
+.search__input{
+    padding: 0.5rem;
+}
+.search__btn{
+    padding: 0.5rem;
+}   
+
 @media(max-width: 900px){
     .search-container{
         display: flex;
@@ -33,12 +40,7 @@
         position: static;
         transform: translate(0, 0);
     }
-    .search__input{
-        padding: 0.5rem;
-    }
-    .search__btn{
-        padding: 0.5rem;
-    }
+    
     .search.hidden-mobile{
         display: none;
     }
