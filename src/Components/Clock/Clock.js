@@ -11,18 +11,18 @@ dayjs.extend(timezone);
 export default class Clock extends UIComponent {
     constructor(props) {
         super(props);
-        this.element = null;
-        // this.timer = null;
+        this.id = 'clock';
     }
 
     createElement(zone) {
         clearInterval(Clock.interval);
-        this.element = createElement('div', { className: 'weather__clock clock' }, dayjs().tz(zone).format('HH:mm:ss'));
+        const node = createElement('div', { className: 'weather__clock clock', id: 'clock' }, dayjs().tz(zone).format('HH:mm:ss'));
         Clock.interval = setInterval(this._update.bind(this), 1000);
-        return this.element;
+        return node;
     }
 
     _update() {
-        this.element.textContent = dayjs().format('HH:mm:ss');
+        const element = document.getElementById(this.id);
+        element.textContent = dayjs().format('HH:mm:ss');
     }
 }
