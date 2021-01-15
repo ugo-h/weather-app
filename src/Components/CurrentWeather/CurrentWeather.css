@@ -53,16 +53,13 @@
 .weather__description{
     grid-column: 1;
     grid-row: 4;
-}
-.weather__summary{
+    grid-area: summary;
     font-size: 1.4rem;
     color: #666;
-    grid-area: summary;
 }
 .weather__temperature{
     color: #666;
     font-size: 5rem;
-    width: 300px;
     grid-area: temperature;
 }
 

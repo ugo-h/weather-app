@@ -28,7 +28,7 @@ export default class FutureWeather {
             }
             this.isRequestNeeded = false;
         }
-        this.state = { ...state, ...data };
+        this.state = { ...this.state, ...state, ...data };
         this.state.units = state.units;
         this.state.location = state.location;
         this.render();

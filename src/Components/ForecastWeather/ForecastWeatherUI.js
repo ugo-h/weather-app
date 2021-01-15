@@ -5,6 +5,7 @@ import UIComponent from '../../UI/UIComponent';
 export default class FutureWeatherUI extends UIComponent {
     createElement() {
         const { units } = this.props;
+        console.log('ForecastUI units: ' + units);
         return this.props.forecast.map(day => {
             return createElement('div', { className: 'forecast__day card' },
                 createElement('div', { className: 'forecast__date card__text' }, day.date),
