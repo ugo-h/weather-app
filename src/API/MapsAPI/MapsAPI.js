@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { mapsApiKey } from '../../config/config';
 
 export default class MapsAPI {
@@ -42,13 +43,7 @@ export default class MapsAPI {
                 'get',
                 'name_' + language
             ]);
-            // this.map.setLayoutProperty(label, 'text-ignore-placement', true);
-            // this.map.setLayoutProperty(label, 'text-allow-overlap', true);
         });
-    }
-
-    onLoad(callback) {
-        this.map.on('load', callback);
     }
 
     update(state) {

@@ -98,7 +98,6 @@ class WeatherApp {
         this.forecastWeather.update({ ...this.state });
 
         loadScript('https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js', () => {
-            // eslint-disable-next-line no-undef
             this.map = new MapsAPI('map', this.state);
             this.map.update({ ...this.state });
         });

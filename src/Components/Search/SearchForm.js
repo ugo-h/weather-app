@@ -10,9 +10,10 @@ export default class SearchForm extends UIComponent {
     }
 
     createElement() {
-        return createElement('form', { className: 'search' + this.props.className, onSubmit: this.props.submitHandler },
+        return createElement('form', { id: 'search', className: 'search' + this.props.className, onSubmit: this.props.submitHandler },
             createElement('label', { className: 'search__field' },
                 createElement('input', { className: 'search__input', placeholder: `${this.strings.enterLocation}` })),
-            createElement('button', { className: 'search__btn', type: 'submit' }, this.strings.search));
+            createElement('button', { className: 'search__btn', type: 'submit' }, this.strings.search),
+            this.props.errorMsg ? createElement('span', { className: 'search__error card full-opacity', onClick: this.props.removeError }, this.props.errorMsg) : '');
     }
 }

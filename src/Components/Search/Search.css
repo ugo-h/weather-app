@@ -7,7 +7,19 @@
 .search-btn{
     display: none;
 }
-
+.search__error{
+    transition: opacity, 300ms;
+    opacity: 0;
+    font-size: 0.8rem;
+    color: black;
+    position: absolute;
+    right: 105%;
+    top: -1rem;
+    width: 300px;
+}
+.full-opacity{
+    opacity: 1;
+}
 @media(max-width: 900px){
     .search-container{
         display: flex;
@@ -29,5 +41,15 @@
     }
     .search.hidden-mobile{
         display: none;
+    }
+}
+@media(max-width: 700px){
+    .search__error{
+        font-size: 0.8rem;
+        color: black;
+        position: absolute;
+        top: -8rem;
+        width: 300px;
+        right: 0;
     }
 }

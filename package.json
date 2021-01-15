@@ -33,7 +33,6 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "dayjs": "^1.10.2",
-    "mapbox-gl": "^2.0.1"
+    "dayjs": "^1.10.2"
   }
 }

@@ -13,7 +13,6 @@ export default class imagesAPI {
             collections: '70572780',
             auto: 'format'
         });
-        // console.log(data)
         return data.urls.regular;
     }
 }

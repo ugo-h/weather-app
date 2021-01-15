@@ -1,18 +1,15 @@
 /* eslint-disable no-multi-assign */
 export function loadScript(src, callback) {
-    let s;
-    let r;
-    let t;
-    r = false;
-    s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.src = src;
-    s.onload = s.onreadystatechange = function () {
-        if (!r && (!this.readyState || this.readyState === 'complete')) {
-            r = true;
+    let isScriptReady = false;
+    let scriptElement = document.createElement('script');
+    scriptElement.type = 'text/javascript';
+    scriptElement.src = src;
+    scriptElement.onload = scriptElement.onreadystatechange = function load() {
+        if (!isScriptReady && (!this.readyState || this.readyState === 'complete')) {
+            isScriptReady = true;
             callback();
         }
     };
-    t = document.getElementsByTagName('script')[0];
-    t.parentNode.insertBefore(s, t);
+    let tag = document.getElementsByTagName('script')[0];
+    tag.parentNode.insertBefore(scriptElement, tag);
 }
