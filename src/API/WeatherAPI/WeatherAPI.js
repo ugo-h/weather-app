@@ -41,7 +41,7 @@ function getFormattedForecast({ forecastday }, lang = 'en') {
 
 export default class WeatherAPI {
     constructor() {
-        this.url = 'http://api.weatherapi.com/v1';
+        this.url = 'https://api.weatherapi.com/v1';
         this.apiKey = weatherApiKey;
     }
 
