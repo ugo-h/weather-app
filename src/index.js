@@ -12,6 +12,7 @@ import {
 } from './lib/lib';
 import MapsAPI from './API/MapsAPI/MapsAPI';
 import { createElement, render } from './UI/domHelper';
+import TimezoneAPI from './API/TimezoneAPI/TimezoneAPI';
 
 class WeatherApp {
     constructor() {
@@ -23,6 +24,7 @@ class WeatherApp {
         };
         this.render();
         this.geolocation = new GeolocationAPI();
+        this.timezone = new TimezoneAPI();
         this.currentWeather = new CurrentWeather('current-weather');
         this.forecastWeather = new ForecastWeather('forecast-weather');
         this.background = new BackgroundImage('container');
@@ -66,7 +68,10 @@ class WeatherApp {
         }
     }
 
-    processSearchResult(result) {
+    async processSearchResult(result) {
+        this.state.timezone = await this.timezone.getTimezoneFromCoordinates({
+            ...result.geometry
+        });
         this.state.lat = `${result.geometry.lat},${result.geometry.lng}`;
         this.state.location = assembleLocation(result.components);
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));

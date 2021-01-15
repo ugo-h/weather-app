@@ -61,6 +61,7 @@ export default class CurrentWeather {
         }
         this.state = { ...this.state, ...weather };
         this.state.units = state.units;
+        this.state.timezone = state.timezone;
         this.state.isLoading = false;
         this.render();
     }

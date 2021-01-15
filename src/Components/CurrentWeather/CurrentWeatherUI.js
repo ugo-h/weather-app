@@ -24,7 +24,7 @@ export default class CurrentWeatherUI extends UIComponent {
                 createElement('img', { className: 'weather__icon', src: this.props.icon }),
                 createElement('p', { className: 'weather__summary card__text' }, this.props.summary)),
             createElement('p', { className: 'weather__date card__text' }, dayjs().locale(language.toLowerCase()).format('dddd, D MMMM')),
-            createElement(Clock, {}),
+            createElement(Clock, { timezone: this.props.timezone }),
             createElement(WeatherInfoList, { className: 'card__text', items }));
     }
 }

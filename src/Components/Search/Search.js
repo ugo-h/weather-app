@@ -32,8 +32,8 @@ export default class Search extends UIComponent {
 
     update() {
         const container = document.getElementById('search');
-        const inner = this.createElement().render();
-        container.innerHTML = inner.innerHTML;
+        const element = this.createElement().render();
+        container.innerHTML = element.innerHTML;
     }
 
     removeError() {

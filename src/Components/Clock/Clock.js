@@ -14,15 +14,17 @@ export default class Clock extends UIComponent {
         this.id = 'clock';
     }
 
-    createElement(zone) {
+    createElement() {
         clearInterval(Clock.interval);
+        const zone = this.props.timezone;
         const node = createElement('div', { className: 'weather__clock clock', id: 'clock' }, dayjs().tz(zone).format('HH:mm:ss'));
         Clock.interval = setInterval(this._update.bind(this), 1000);
         return node;
     }
 
     _update() {
+        const zone = this.props.timezone;
         const element = document.getElementById(this.id);
-        element.textContent = dayjs().format('HH:mm:ss');
+        element.textContent = dayjs().tz(zone).format('HH:mm:ss');
     }
 }
