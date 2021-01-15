@@ -1,37 +1,25 @@
 import Component from './UIComponent';
+import Node from './util/Node';
 
 /* eslint-disable no-param-reassign */
 export function createElement(type, props, ...children) {
-    let element;
+    let node;
     if (type.prototype instanceof Component) {
         let ElementConstructor = type;
         props.children = children;
-        element = new ElementConstructor(props).createElement();
-        return element;
+        node = new ElementConstructor(props).createElement();
+        return node;
     }
-    element = document.createElement(type);
-    Object.keys(props).forEach(key => {
-        if (key === 'onClick') {
-            element.addEventListener('click', props[key]);
-            return;
-        } if (key === 'onSubmit') {
-            element.addEventListener('submit', props[key]);
-            return;
-        }
-        element[key] = props[key];
-    });
-    children.forEach(child => {
-        element.append(child);
-    });
-    return element;
+    node = new Node(type, props, children);
+    return node;
 }
 
 export function render(element, id) {
     const container = document.getElementById(id);
     container.innerHTML = '';
     if (element instanceof Array) {
-        element.forEach(el => container.append(el));
+        element.forEach(el => container.append(el instanceof Node ? el.render() : el));
         return;
     }
-    container.append(element);
+    container.append(element instanceof Node ? element.render() : element);
 }

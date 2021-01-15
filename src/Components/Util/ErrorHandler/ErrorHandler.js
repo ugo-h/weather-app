@@ -1,16 +1,11 @@
-export default class ErrorHandler {
-    constructor(ui) {
-        this.ui = ui;
-    }
+import UIComponent from '../../../UI/UIComponent';
 
-    async wrapRequest(request, errorParams) {
-        try {
-            const data = await request();
-            this.ui.removeError();
-            return { hasError: false, data };
-        } catch (err) {
-            this.ui.displayError(errorParams);
-            return { hasError: true, data: null };
-        }
+export default class ErrorHandler extends UIComponent {
+    createElement() {
+        return (
+            this.props.hasError
+                ? this.props.errorElement
+                : this.props.successElement
+        );
     }
 }

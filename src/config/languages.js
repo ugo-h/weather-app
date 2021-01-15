@@ -2,7 +2,7 @@ export default {
     en: {
         strings: {
             emptySearchResult: 'Nothing found',
-            apiUnavailableError: 'Sorry, the api is currently unavailable. Please, try again later.',
+            apiUnavailableError: 'Sorry, the service is currently unavailable. Please, try again later.',
             search: 'search',
             searchError: 'Search query must be at least 3 characters long!',
             enterLocation: 'Enter a city',

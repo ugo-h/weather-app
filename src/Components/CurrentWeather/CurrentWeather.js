@@ -3,26 +3,29 @@ import WeatherAPI from '../../API/WeatherAPI/WeatherAPI';
 import GeocodingAPI from '../../API/GeocodingAPI/GeocodingAPI';
 import LoadingPlaceholder from '../LoadingPlaceholder/LoadingPlaceholder';
 import WeatherAPIsFacade from './WeatherAPIsFacade';
-// import languageConfig from '../../config/languages';
+import languageConfig from '../../config/languages';
 import { createElement, render } from '../../UI/domHelper';
+import ErrorHandler from '../Util/ErrorHandler/ErrorHandler';
 
 export default class CurrentWeather {
     constructor(id) {
         this.id = id;
-        this.LoadingPlaceholder = new LoadingPlaceholder(id);
         this.apiFacade = new WeatherAPIsFacade(
             // this facade wraps all api requests for this class
             new WeatherAPI(),
             new GeocodingAPI()
         );
         this.state = {
-            lat: null
+            lat: null,
+            language: 'en',
+            hasError: false,
+            isLoading: true
         };
         this.isRequestNeeded = true;
     }
 
     async _updateLocationAndLanguage(state, setState) {
-        this.LoadingPlaceholder.render();
+        this.state.isLoading = true;
         const location = await this.apiFacade.parseLocationFromState(state);
         this.state = { ...this.state, ...state };
         this.state.location = location;
@@ -32,14 +35,15 @@ export default class CurrentWeather {
     }
 
     async update(state, updateMainState) {
-        // const strings = languageConfig[state.language].strings;
+        this.state.isLoading = true;
+        this.render();
         const hasLocationChanged = state.lat !== this.state.lat;
         const hasLanguagehanged = state.language !== this.state.language;
         if (hasLanguagehanged || hasLocationChanged) {
             try {
                 await this._updateLocationAndLanguage(state, updateMainState);
             } catch (err) {
-                return;
+                this.state.hasError = true;
             }
             this.isRequestNeeded = true;
         }
@@ -48,20 +52,29 @@ export default class CurrentWeather {
             // we send request only if it is neccessary. For example, when the only thing
             // we update is temperature units, we do not send the request
             try {
+                this.state.isLoading = true;
                 weather = await this.apiFacade.getWeatherFromState(state);
             } catch (err) {
-                return;
+                this.state.hasError = true;
             }
             this.isRequestNeeded = false;
         }
         this.state = { ...this.state, ...weather };
         this.state.units = state.units;
+        this.state.isLoading = false;
         this.render();
     }
 
     render() {
+        const strings = languageConfig[this.state.language].strings;
         render(
-            createElement(CurrentWeatherUI, { ...this.state }),
+            this.state.isLoading
+                ? createElement(LoadingPlaceholder, { isLoading: this.state.isLoading })
+                : createElement(ErrorHandler, {
+                    hasError: this.state.hasError,
+                    successElement: createElement(CurrentWeatherUI, { ...this.state }),
+                    errorElement: createElement('div', { className: 'card' }, strings.apiUnavailableError)
+                }),
             this.id
         );
     }

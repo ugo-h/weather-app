@@ -9,9 +9,9 @@ import WeatherInfoList from './WeatherInfoList/WeatherInfoList';
 
 export default class CurrentWeatherUI extends UIComponent {
     createElement() {
+        if (this.props.hasError) return null;
         const { language, temp, units } = this.props;
         const strings = languages[language].strings;
-
         const items = {
             feelslike: `${strings.feelslike}: ${this.props.feelslike[units]}º${units}`,
             humidity: `${strings.humidity}: ${this.props.humidity}%`,

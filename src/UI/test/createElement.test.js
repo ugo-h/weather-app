@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 import UIComponent from '../UIComponent';
-import { createElement } from '../domHelper';
+import { createElement, render } from '../domHelper';
 
 test('createElement should return htmlDomElement', () => {
-    expect(createElement('div', {}).innerHTML).toBe(document.createElement('DIV').innerHTML);
+    expect(createElement('div', {}).render().innerHTML).toBe(document.createElement('DIV').innerHTML);
 });
 
 test('Should create component element when passed type is a constuctor function that inherits Component', () => {
@@ -14,5 +14,11 @@ test('Should create component element when passed type is a constuctor function 
     }
     const dummyElement = document.createElement('DIV');
     dummyElement.className = 'dummy';
-    expect(createElement(DummyComponent, { className: 'dummy' }).innerHTML).toBe(dummyElement.innerHTML);
+    expect(createElement(DummyComponent, { className: 'dummy' }).render().innerHTML).toBe(dummyElement.innerHTML);
+});
+
+test('Should append created component to dom', () => {
+    document.body.innerHTML = '<div id="target"></div>';
+    render(createElement('p', {}), 'target');
+    expect(document.body.innerHTML).toBe('<div id="target"><p></p></div>');
 });
