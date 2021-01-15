@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import { createElement } from './domHelper';
-import UIComponent from './UIComponent';
+import { createElement } from '../../UI/domHelper';
+import UIComponent from '../../UI/UIComponent';
 
 export default class WeatherUI extends UIComponent {
     createElement() {
