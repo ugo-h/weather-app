@@ -1,3 +1,5 @@
+import Coordinates from './Coordinates/Coordinates';
+
 function getLanguage(data) {
     const language = data.country.toLowerCase() === 'ru' ? 'ru' : 'en';
     return language;
@@ -10,10 +12,11 @@ function getUnits(data) {
 
 function getLocation(data) {
     const location = `${data.city}, ${data.country}`;
-    const lat = data.loc;
+    const [lat, lng] = data.loc.split(',');
+    const latLng = new Coordinates(lat, lng);
     return {
         location,
-        lat,
+        latLng,
         timezone: data.timezone
     };
 }

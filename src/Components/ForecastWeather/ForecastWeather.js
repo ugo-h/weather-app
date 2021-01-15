@@ -10,7 +10,7 @@ export default class FutureWeather {
         this.api = new WeatherAPI();
         this.id = id;
         this.state = {
-            lat: null,
+            latLng: null,
             hasError: false,
             isLoading: true,
             language: 'en'
@@ -22,12 +22,12 @@ export default class FutureWeather {
         this.state.isLoading = true;
         this.render();
         let data = {};
-        const hasLocationChanged = state.lat !== this.state.lat;
+        const hasLocationChanged = state.latLng !== this.state.latLng;
         const hasLanguageChanged = state.language !== this.state.language;
         if (hasLocationChanged || hasLanguageChanged) this.isRequestNeeded = true;
         if (this.isRequestNeeded) {
             try {
-                data = await this.api.getThreeDaysWeather(state.lat, state.language);
+                data = await this.api.getThreeDaysWeather(state.latLng, state.language);
             } catch {
                 this.state.hasError = true;
             }

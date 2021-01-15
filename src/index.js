@@ -12,13 +12,16 @@ import {
 import MapsAPI from './API/MapsAPI/MapsAPI';
 import { createElement, render } from './UI/domHelper';
 import TimezoneAPI from './API/TimezoneAPI/TimezoneAPI';
+import Coordinates from './lib/Coordinates/Coordinates';
+
+document.cookie = 'Set-Cookie: promo_shown=1; SameSite=Lax';
 
 class WeatherApp {
     constructor() {
         this.state = {
             units: null,
             location: null,
-            lat: null,
+            latLng: {},
             language: null
         };
         this.render();
@@ -43,7 +46,7 @@ class WeatherApp {
         this.forecastWeather.update({ ...this.state });
         this.controlBlock.update({ ...this.state });
 
-        this.map.update({ ...this.state });
+        this.map.update(this.state.language, this.state.latLng);
         this.saveState();
     }
 
@@ -67,15 +70,15 @@ class WeatherApp {
         }
     }
 
-    async processSearchResult(result) {
+    async processSearchResult({ geometry, location }) {
         this.state.timezone = await this.timezone.getTimezoneFromCoordinates({
-            ...result.geometry
+            ...geometry
         });
-        this.state.lat = `${result.geometry.lat},${result.geometry.lng}`;
-        this.state.location = result.location;
+        this.state.latLng = new Coordinates(geometry.lat, geometry.lng);
+        this.state.location = location;
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
-        this.map.update({ ...this.state });
+        this.map.update(this.state.language, this.state.latLng);
         scrollToTop();
     }
 
@@ -102,8 +105,8 @@ class WeatherApp {
         this.forecastWeather.update({ ...this.state });
 
         loadScript('https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js', () => {
-            this.map = new MapsAPI('map', this.state, this.processSearchResult.bind(this));
-            this.map.update({ ...this.state });
+            this.map = new MapsAPI('map', this.state.latLng, this.processSearchResult.bind(this));
+            this.map.update(this.state.language, this.state.latLng);
         });
     }
 

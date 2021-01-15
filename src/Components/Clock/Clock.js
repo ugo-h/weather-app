@@ -24,7 +24,11 @@ export default class Clock extends UIComponent {
 
     _update() {
         const zone = this.props.timezone;
-        const element = document.getElementById(this.id);
-        element.textContent = dayjs().tz(zone).format('HH:mm:ss');
+        try {
+            const element = document.getElementById(this.id);
+            element.textContent = dayjs().tz(zone).format('HH:mm:ss');
+        } catch (err) {
+            clearInterval(Clock.interval);
+        }
     }
 }

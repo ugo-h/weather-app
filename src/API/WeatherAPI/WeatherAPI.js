@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { fetchGetJson } from '../../lib/lib';
 import { weatherApiKey } from '../../config/config';
+import Coordinates from '../../lib/Coordinates/Coordinates';
 
 function getFormattedCurrentWeather({ current }) {
     return {
@@ -45,8 +46,11 @@ export default class WeatherAPI {
     }
 
     async getCurrentWeather(location, lang) {
+        if (!(location instanceof Coordinates)) {
+            throw new TypeError(`"location" must be of the type Coordinates, not "${typeof location}"`);
+        }
         const data = await fetchGetJson(`${this.url}/current.json`, {
-            q: location,
+            q: location.toString(),
             key: this.apiKey,
             lang
         });
@@ -54,8 +58,11 @@ export default class WeatherAPI {
     }
 
     async getThreeDaysWeather(location, lang) {
+        if (!(location instanceof Coordinates)) {
+            throw new TypeError(`"location" must be of the type Coordinates, not "${typeof location}"`);
+        }
         const data = await fetchGetJson(`${this.url}/forecast.json`, {
-            q: location,
+            q: location.toString(),
             key: this.apiKey,
             lang: lang.toLowerCase(),
             days: 3

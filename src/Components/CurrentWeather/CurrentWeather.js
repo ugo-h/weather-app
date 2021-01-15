@@ -16,7 +16,7 @@ export default class CurrentWeather {
             new GeocodingAPI()
         );
         this.state = {
-            lat: null,
+            latLng: {},
             language: 'en',
             hasError: false,
             isLoading: true
@@ -37,7 +37,7 @@ export default class CurrentWeather {
     async update(state, updateMainState) {
         this.state.isLoading = true;
         this.render();
-        const hasLocationChanged = state.lat !== this.state.lat;
+        const hasLocationChanged = state.latLng.toString() !== this.state.latLng.toString();
         const hasLanguagehanged = state.language !== this.state.language;
         if (hasLanguagehanged || hasLocationChanged) {
             try {
@@ -61,6 +61,7 @@ export default class CurrentWeather {
         }
         this.state = { ...this.state, ...weather };
         this.state.units = state.units;
+        this.state.language = state.language;
         this.state.timezone = state.timezone;
         this.state.isLoading = false;
         this.render();

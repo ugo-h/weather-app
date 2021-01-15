@@ -6,12 +6,12 @@ export default class WeatherAPIsFacade {
 
     async parseLocationFromState(state) {
         return this.geocodingAPI.getStringFromCoordinates(
-            state.lat,
+            state.latLng,
             { language: state.language }
         );
     }
 
     async getWeatherFromState(state) {
-        return this.weatherAPI.getCurrentWeather(state.lat, state.language.toLowerCase());
+        return this.weatherAPI.getCurrentWeather(state.latLng, state.language.toLowerCase());
     }
 }
