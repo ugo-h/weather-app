@@ -13,7 +13,7 @@ body{
     height: 100%;
 }
 .container{
-    background: #666;
+    background: #f4f4f4;
     display: flex;
     flex-direction: column;
     align-items: center;

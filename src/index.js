@@ -7,7 +7,8 @@ import BackgroundImage from './Components/BackgroundImage/BackgroundImage';
 import {
     getFormattedGeolocationData,
     assembleLocation,
-    scrollToTop
+    scrollToTop,
+    loadScript
 } from './lib/lib';
 import MapsAPI from './API/MapsAPI/MapsAPI';
 import { createElement, render } from './UI/domHelper';
@@ -81,7 +82,6 @@ class WeatherApp {
     async init() {
         await this.loadState();
         this.background.apply();
-        this.map = new MapsAPI('map', this.state);
         this.controlBlock = new ControlBlock('control', {
             language: this.state.language,
             location: this.state.location
@@ -97,7 +97,11 @@ class WeatherApp {
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
 
-        this.map.update({ ...this.state });
+        loadScript('https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js', () => {
+            // eslint-disable-next-line no-undef
+            this.map = new MapsAPI('map', this.state);
+            this.map.update({ ...this.state });
+        });
     }
 
     // eslint-disable-next-line class-methods-use-this

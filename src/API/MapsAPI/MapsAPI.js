@@ -1,5 +1,4 @@
 import { mapsApiKey } from '../../config/config';
-import mapboxgl from 'mapbox-gl';
 
 export default class MapsAPI {
     constructor(containerId, { lat }) {
