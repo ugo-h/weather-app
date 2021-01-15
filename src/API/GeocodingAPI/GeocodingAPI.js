@@ -1,6 +1,18 @@
 import { fetchGetJson, assembleLocation } from '../../lib/lib';
 import { geocodingApiKey } from '../../config/config';
 /* eslint-disable object-curly-newline */
+
+function formatGeocodingResponse(results) {
+    return results.map(result => {
+        const { geometry, components, formatted } = result;
+        return {
+            geometry,
+            location: assembleLocation(components),
+            formatted
+        };
+    });
+}
+
 export default class GeocodingAPI {
     constructor() {
         this.url = 'https://api.opencagedata.com/geocode/v1/json';
@@ -13,7 +25,7 @@ export default class GeocodingAPI {
             key: this.token,
             ...options
         });
-        return data.results;
+        return formatGeocodingResponse(data.results);
     }
 
     async getStringFromCoordinates(coordinates, options) {
