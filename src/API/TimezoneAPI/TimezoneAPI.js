@@ -1,18 +1,20 @@
-import { timezoneApiUsername } from '../../config/config';
+import { timezoneApiKey } from '../../config/config';
 import { fetchGetJson } from '../../lib/lib';
 
 export default class TimezoneAPI {
     constructor() {
-        this.url = 'https://api.geonames.org/timezoneJSON';
-        this.username = timezoneApiUsername;
+        this.url = 'http://api.timezonedb.com/v2.1/get-time-zone';
+        this.key = timezoneApiKey;
     }
 
     async getTimezoneFromCoordinates(coordinates) {
         const data = await fetchGetJson(this.url, {
+            format: 'json',
+            by: 'position',
             lat: coordinates.lat,
             lng: coordinates.lng,
-            username: this.username
+            key: this.key
         });
-        return data.timezoneId;
+        return data.zoneName;
     }
 }

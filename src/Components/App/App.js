@@ -26,7 +26,7 @@ export default class WeatherApp {
         };
         this.render();
         this.geolocation = new GeolocationAPI();
-        this.timezone = new TimezoneAPI();
+        this.timezoneAPI = new TimezoneAPI();
         this.currentWeather = new CurrentWeather('current-weather');
         this.forecastWeather = new ForecastWeather('forecast-weather');
         this.background = new BackgroundImage('container');
@@ -50,11 +50,11 @@ export default class WeatherApp {
     }
 
     async processSearchResult({ geometry, location }) {
-        this.state.timezone = await this.timezone.getTimezoneFromCoordinates({
-            ...geometry
-        });
+        // processes a search result either from search or from map marker
+        this.state.timezone = await this.timezoneAPI.getTimezoneFromCoordinates(geometry);
         this.state.latLng = new Coordinates(geometry.lat, geometry.lng);
         this.state.location = location;
+
         this.currentWeather.update({ ...this.state }, this.setState.bind(this));
         this.forecastWeather.update({ ...this.state });
         this.map.update(this.state.language, this.state.latLng);
