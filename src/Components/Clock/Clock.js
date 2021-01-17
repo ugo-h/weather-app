@@ -16,7 +16,7 @@ export default class Clock extends UIComponent {
 
     createElement() {
         clearInterval(Clock.interval);
-        const zone = this.props.timezone;
+        const zone = this.props.timezone || 'Europe/London';
         const node = createElement('div', { className: 'weather__clock clock', id: 'clock' }, dayjs().tz(zone).format('HH:mm:ss'));
         Clock.interval = setInterval(this._update.bind(this), 1000);
         return node;

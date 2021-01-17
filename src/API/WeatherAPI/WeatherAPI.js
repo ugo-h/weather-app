@@ -54,6 +54,7 @@ export default class WeatherAPI {
             key: this.apiKey,
             lang
         });
+        if (data.error) return data;
         return getFormattedCurrentWeather(data);
     }
 
@@ -67,6 +68,7 @@ export default class WeatherAPI {
             lang: lang.toLowerCase(),
             days: 3
         });
+        if (data.error) return data;
         return { forecast: getFormattedForecast(data.forecast, lang.toLowerCase()) };
     }
 }

@@ -26,10 +26,11 @@ export default class FutureWeather {
         const hasLanguageChanged = state.language !== this.state.language;
         if (hasLocationChanged || hasLanguageChanged) this.isRequestNeeded = true;
         if (this.isRequestNeeded) {
-            try {
-                data = await this.api.getThreeDaysWeather(state.latLng, state.language);
-            } catch {
+            data = await this.api.getThreeDaysWeather(state.latLng, state.language);
+            if (data.error) {
                 this.state.hasError = true;
+            } else {
+                this.state.hasError = false;
             }
             this.isRequestNeeded = false;
         }

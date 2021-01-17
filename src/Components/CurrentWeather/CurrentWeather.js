@@ -51,11 +51,12 @@ export default class CurrentWeather {
         if (this.isRequestNeeded) {
             // we send request only if it is neccessary. For example, when the only thing
             // we update is temperature units, we do not send the request
-            try {
-                this.state.isLoading = true;
-                weather = await this.apiFacade.getWeatherFromState(state);
-            } catch (err) {
+            this.state.isLoading = true;
+            weather = await this.apiFacade.getWeatherFromState(state);
+            if (weather.error) {
                 this.state.hasError = true;
+            } else {
+                this.state.hasError = false;
             }
             this.isRequestNeeded = false;
         }

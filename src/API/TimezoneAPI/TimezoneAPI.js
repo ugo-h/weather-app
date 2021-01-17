@@ -3,7 +3,7 @@ import { fetchGetJson } from '../../lib/lib';
 
 export default class TimezoneAPI {
     constructor() {
-        this.url = 'http://api.timezonedb.com/v2.1/get-time-zone';
+        this.url = 'https://api.timezonedb.com/v2.1/get-time-zone';
         this.key = timezoneApiKey;
     }
 
